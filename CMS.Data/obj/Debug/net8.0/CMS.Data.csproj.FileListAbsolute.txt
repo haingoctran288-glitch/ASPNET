@@ -1,0 +1,22 @@
+D:\PhucCMS_Solution\CMS.Data\obj\Debug\net8.0\CMS.Data.GeneratedMSBuildEditorConfig.editorconfig
+D:\PhucCMS_Solution\CMS.Data\obj\Debug\net8.0\CMS.Data.AssemblyInfoInputs.cache
+D:\PhucCMS_Solution\CMS.Data\obj\Debug\net8.0\CMS.Data.AssemblyInfo.cs
+D:\PhucCMS_Solution\CMS.Data\obj\Debug\net8.0\CMS.Data.csproj.CoreCompileInputs.cache
+D:\PhucCMS_Solution\CMS.Data\bin\Debug\net8.0\CMS.Data.deps.json
+D:\PhucCMS_Solution\CMS.Data\bin\Debug\net8.0\CMS.Data.dll
+D:\PhucCMS_Solution\CMS.Data\bin\Debug\net8.0\CMS.Data.pdb
+D:\PhucCMS_Solution\CMS.Data\obj\Debug\net8.0\CMS.Data.dll
+D:\PhucCMS_Solution\CMS.Data\obj\Debug\net8.0\refint\CMS.Data.dll
+D:\PhucCMS_Solution\CMS.Data\obj\Debug\net8.0\CMS.Data.pdb
+D:\PhucCMS_Solution\CMS.Data\obj\Debug\net8.0\ref\CMS.Data.dll
+C:\Users\NGOC HAI\Downloads\back\asp-net-buoi-2\CMS.Data\bin\Debug\net8.0\CMS.Data.deps.json
+C:\Users\NGOC HAI\Downloads\back\asp-net-buoi-2\CMS.Data\bin\Debug\net8.0\CMS.Data.dll
+C:\Users\NGOC HAI\Downloads\back\asp-net-buoi-2\CMS.Data\bin\Debug\net8.0\CMS.Data.pdb
+C:\Users\NGOC HAI\Downloads\back\asp-net-buoi-2\CMS.Data\obj\Debug\net8.0\CMS.Data.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\NGOC HAI\Downloads\back\asp-net-buoi-2\CMS.Data\obj\Debug\net8.0\CMS.Data.AssemblyInfoInputs.cache
+C:\Users\NGOC HAI\Downloads\back\asp-net-buoi-2\CMS.Data\obj\Debug\net8.0\CMS.Data.AssemblyInfo.cs
+C:\Users\NGOC HAI\Downloads\back\asp-net-buoi-2\CMS.Data\obj\Debug\net8.0\CMS.Data.csproj.CoreCompileInputs.cache
+C:\Users\NGOC HAI\Downloads\back\asp-net-buoi-2\CMS.Data\obj\Debug\net8.0\CMS.Data.dll
+C:\Users\NGOC HAI\Downloads\back\asp-net-buoi-2\CMS.Data\obj\Debug\net8.0\refint\CMS.Data.dll
+C:\Users\NGOC HAI\Downloads\back\asp-net-buoi-2\CMS.Data\obj\Debug\net8.0\CMS.Data.pdb
+C:\Users\NGOC HAI\Downloads\back\asp-net-buoi-2\CMS.Data\obj\Debug\net8.0\ref\CMS.Data.dll

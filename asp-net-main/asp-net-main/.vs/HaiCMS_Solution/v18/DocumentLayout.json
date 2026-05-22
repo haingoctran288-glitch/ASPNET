@@ -1,0 +1,139 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\NGOC HAI\\Downloads\\asp-net-buoi-2\\asp-net-main\\asp-net-main\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{A619D9AB-A331-4D7D-8BA9-B78701F0575E}|CMS.Data\\CMS.Data.csproj|c:\\users\\ngoc hai\\downloads\\asp-net-buoi-2\\asp-net-main\\asp-net-main\\cms.data\\seed\\seeddata.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A619D9AB-A331-4D7D-8BA9-B78701F0575E}|CMS.Data\\CMS.Data.csproj|solutionrelative:cms.data\\seed\\seeddata.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F009A73C-A146-4F3D-A6B8-249B83540C65}|CMS.Backend\\CMS.Backend.csproj|c:\\users\\ngoc hai\\downloads\\asp-net-buoi-2\\asp-net-main\\asp-net-main\\cms.backend\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F009A73C-A146-4F3D-A6B8-249B83540C65}|CMS.Backend\\CMS.Backend.csproj|solutionrelative:cms.backend\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F009A73C-A146-4F3D-A6B8-249B83540C65}|CMS.Backend\\CMS.Backend.csproj|c:\\users\\ngoc hai\\downloads\\asp-net-buoi-2\\asp-net-main\\asp-net-main\\cms.backend\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{F009A73C-A146-4F3D-A6B8-249B83540C65}|CMS.Backend\\CMS.Backend.csproj|solutionrelative:cms.backend\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F009A73C-A146-4F3D-A6B8-249B83540C65}|CMS.Backend\\CMS.Backend.csproj|c:\\users\\ngoc hai\\downloads\\asp-net-buoi-2\\asp-net-main\\asp-net-main\\cms.backend\\views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{F009A73C-A146-4F3D-A6B8-249B83540C65}|CMS.Backend\\CMS.Backend.csproj|solutionrelative:cms.backend\\views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F009A73C-A146-4F3D-A6B8-249B83540C65}|CMS.Backend\\CMS.Backend.csproj|c:\\users\\ngoc hai\\downloads\\asp-net-buoi-2\\asp-net-main\\asp-net-main\\cms.backend\\views\\post\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{F009A73C-A146-4F3D-A6B8-249B83540C65}|CMS.Backend\\CMS.Backend.csproj|solutionrelative:cms.backend\\views\\post\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F009A73C-A146-4F3D-A6B8-249B83540C65}|CMS.Backend\\CMS.Backend.csproj|c:\\users\\ngoc hai\\downloads\\asp-net-buoi-2\\asp-net-main\\asp-net-main\\cms.backend\\controllers\\categoryproductcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F009A73C-A146-4F3D-A6B8-249B83540C65}|CMS.Backend\\CMS.Backend.csproj|solutionrelative:cms.backend\\controllers\\categoryproductcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\NGOC HAI\\Downloads\\asp-net-buoi-2\\asp-net-main\\asp-net-main\\CMS.Data\\Migrations\\20260522073017_Init.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:CMS.Data\\Migrations\\20260522073017_Init.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 1,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\NGOC HAI\\Downloads\\asp-net-buoi-2\\asp-net-main\\asp-net-main\\CMS.Backend\\Program.cs",
+              "RelativeDocumentMoniker": "CMS.Backend\\Program.cs",
+              "ToolTip": "C:\\Users\\NGOC HAI\\Downloads\\asp-net-buoi-2\\asp-net-main\\asp-net-main\\CMS.Backend\\Program.cs",
+              "RelativeToolTip": "CMS.Backend\\Program.cs",
+              "ViewState": "AgIAAA0AAAAAAAAAAAAUwDUAAAAKAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-22T07:38:28.652Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "SeedData.cs",
+              "DocumentMoniker": "C:\\Users\\NGOC HAI\\Downloads\\asp-net-buoi-2\\asp-net-main\\asp-net-main\\CMS.Data\\Seed\\SeedData.cs",
+              "RelativeDocumentMoniker": "CMS.Data\\Seed\\SeedData.cs",
+              "ToolTip": "C:\\Users\\NGOC HAI\\Downloads\\asp-net-buoi-2\\asp-net-main\\asp-net-main\\CMS.Data\\Seed\\SeedData.cs",
+              "RelativeToolTip": "CMS.Data\\Seed\\SeedData.cs",
+              "ViewState": "AgIAAAwAAAAAAAAAAAAUwCEAAAANAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-22T07:37:40.52Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "_Layout.cshtml",
+              "DocumentMoniker": "C:\\Users\\NGOC HAI\\Downloads\\asp-net-buoi-2\\asp-net-main\\asp-net-main\\CMS.Backend\\Views\\Shared\\_Layout.cshtml",
+              "RelativeDocumentMoniker": "CMS.Backend\\Views\\Shared\\_Layout.cshtml",
+              "ToolTip": "C:\\Users\\NGOC HAI\\Downloads\\asp-net-buoi-2\\asp-net-main\\asp-net-main\\CMS.Backend\\Views\\Shared\\_Layout.cshtml",
+              "RelativeToolTip": "CMS.Backend\\Views\\Shared\\_Layout.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-05-22T07:31:59.555Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "C:\\Users\\NGOC HAI\\Downloads\\asp-net-buoi-2\\asp-net-main\\asp-net-main\\CMS.Backend\\Views\\Post\\Index.cshtml",
+              "RelativeDocumentMoniker": "CMS.Backend\\Views\\Post\\Index.cshtml",
+              "ToolTip": "C:\\Users\\NGOC HAI\\Downloads\\asp-net-buoi-2\\asp-net-main\\asp-net-main\\CMS.Backend\\Views\\Post\\Index.cshtml",
+              "RelativeToolTip": "CMS.Backend\\Views\\Post\\Index.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-05-22T07:31:49.338Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "CategoryProductController.cs",
+              "DocumentMoniker": "C:\\Users\\NGOC HAI\\Downloads\\asp-net-buoi-2\\asp-net-main\\asp-net-main\\CMS.Backend\\Controllers\\CategoryProductController.cs",
+              "RelativeDocumentMoniker": "CMS.Backend\\Controllers\\CategoryProductController.cs",
+              "ToolTip": "C:\\Users\\NGOC HAI\\Downloads\\asp-net-buoi-2\\asp-net-main\\asp-net-main\\CMS.Backend\\Controllers\\CategoryProductController.cs",
+              "RelativeToolTip": "CMS.Backend\\Controllers\\CategoryProductController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-22T07:31:36.807Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "20260522073017_Init.cs",
+              "DocumentMoniker": "C:\\Users\\NGOC HAI\\Downloads\\asp-net-buoi-2\\asp-net-main\\asp-net-main\\CMS.Data\\Migrations\\20260522073017_Init.cs",
+              "RelativeDocumentMoniker": "CMS.Data\\Migrations\\20260522073017_Init.cs",
+              "ToolTip": "C:\\Users\\NGOC HAI\\Downloads\\asp-net-buoi-2\\asp-net-main\\asp-net-main\\CMS.Data\\Migrations\\20260522073017_Init.cs",
+              "RelativeToolTip": "CMS.Data\\Migrations\\20260522073017_Init.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-22T07:30:18.317Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "C:\\Users\\NGOC HAI\\Downloads\\asp-net-buoi-2\\asp-net-main\\asp-net-main\\CMS.Backend\\appsettings.json",
+              "RelativeDocumentMoniker": "CMS.Backend\\appsettings.json",
+              "ToolTip": "C:\\Users\\NGOC HAI\\Downloads\\asp-net-buoi-2\\asp-net-main\\asp-net-main\\CMS.Backend\\appsettings.json",
+              "RelativeToolTip": "CMS.Backend\\appsettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAVAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2026-05-22T07:26:10.247Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
