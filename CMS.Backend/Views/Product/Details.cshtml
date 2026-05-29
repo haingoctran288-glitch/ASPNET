@@ -1,0 +1,50 @@
+@model CMS.Data.Entities.Product
+@{
+    ViewData["Title"] = "Chi tiết Product";
+}
+
+<div class="container mt-5">
+    <div class="card shadow-sm border-0">
+        <div class="card-header bg-info text-white">
+            <h3 class="mb-0"><i class="fas fa-info-circle me-2"></i>Chi tiết Product</h3>
+        </div>
+        <div class="card-body">
+            <dl class="row">
+                
+                <dt class="col-sm-3">@Html.DisplayNameFor(model => model.Name)</dt>
+                <dd class="col-sm-9">@Html.DisplayFor(model => model.Name)</dd>
+                <dt class="col-sm-3">@Html.DisplayNameFor(model => model.Description)</dt>
+                <dd class="col-sm-9">@Html.DisplayFor(model => model.Description)</dd>
+                <dt class="col-sm-3">@Html.DisplayNameFor(model => model.Price)</dt>
+                <dd class="col-sm-9">@Html.DisplayFor(model => model.Price)</dd>
+                <dt class="col-sm-3">@Html.DisplayNameFor(model => model.StockQuantity)</dt>
+                <dd class="col-sm-9">@Html.DisplayFor(model => model.StockQuantity)</dd>
+                <dt class="col-sm-3">@Html.DisplayNameFor(model => model.ImageUrl)</dt>
+                <dd class="col-sm-9">
+                    @if (!string.IsNullOrEmpty(Model.ImageUrl))
+                    {
+                        var imageUrl = Model.ImageUrl.Replace("\\", "/");
+                        if (!imageUrl.StartsWith("/") && !imageUrl.StartsWith("http")) {
+                            imageUrl = "/" + imageUrl;
+                        }
+                        <div>
+                            <img src="@imageUrl" alt="Product Image" class="img-fluid rounded shadow-sm mb-2" style="max-height: 200px;" onerror="this.onerror=null; this.src='https://via.placeholder.com/400x250?text=Lỗi+đường+dẫn+ảnh';" />
+                            <br/>
+                            <small class="text-muted">Đường dẫn gốc: <code>@Model.ImageUrl</code></small>
+                        </div>
+                    }
+                    else
+                    {
+                        <span class="text-muted">Chưa có ảnh</span>
+                    }
+                </dd>
+                <dt class="col-sm-3">CategoryProduct</dt>
+                <dd class="col-sm-9">@Html.DisplayFor(model => model.CategoryProduct.Name)</dd>
+            </dl>
+            <div class="mt-4">
+                <a asp-action="Edit" asp-route-id="@Model?.Id" class="btn btn-warning"><i class="fas fa-edit me-1"></i>Sửa</a>
+                <a asp-action="Index" class="btn btn-secondary"><i class="fas fa-arrow-left me-1"></i>Quay lại</a>
+            </div>
+        </div>
+    </div>
+</div>
