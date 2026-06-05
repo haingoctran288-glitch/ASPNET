@@ -1,0 +1,38 @@
+@model CMS.Data.Entities.OrderDetail
+@{
+    ViewData["Title"] = "Thêm mới OrderDetail";
+}
+
+<div class="container mt-5">
+    <div class="card shadow-sm border-0">
+        <div class="card-header bg-primary text-white">
+            <h3 class="mb-0">Thêm mới OrderDetail</h3>
+        </div>
+        <div class="card-body">
+            <form asp-action="Create">
+                <div asp-validation-summary="All" class="text-danger"></div>
+                
+            <div class="form-group mb-3">
+                <label asp-for="OrderId" class="control-label"></label>
+                <select asp-for="OrderId" class="form-control" asp-items="ViewBag.OrderId"></select>
+            </div>
+            <div class="form-group mb-3">
+                <label asp-for="ProductId" class="control-label"></label>
+                <select asp-for="ProductId" class="form-control" asp-items="ViewBag.ProductId"></select>
+            </div>
+            <div class="form-group mb-3">
+                <label asp-for="Quantity" class="control-label fw-bold">Số lượng</label>
+                <input asp-for="Quantity" class="form-control" type="number" min="1" value="1" />
+            </div>
+            <div class="form-group mb-3">
+                <label asp-for="UnitPrice" class="control-label fw-bold">Đơn giá</label>
+                <input asp-for="UnitPrice" class="form-control" type="number" step="0.01" />
+            </div>
+                <div class="form-group mt-4">
+                    <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Lưu</button>
+                    <a asp-action="Index" class="btn btn-secondary"><i class="fas fa-arrow-left"></i> Quay lại</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,56 @@
+@model CMS.Data.Entities.Product
+@{
+    ViewData["Title"] = "Sửa Product";
+}
+
+<div class="container mt-5">
+    <div class="card shadow-sm border-0">
+        <div class="card-header bg-warning text-dark">
+            <h3 class="mb-0">Chỉnh sửa Product</h3>
+        </div>
+        <div class="card-body">
+            <form asp-action="Edit" enctype="multipart/form-data">
+                <div asp-validation-summary="All" class="text-danger"></div>
+                <input type="hidden" asp-for="Id" />
+                
+            <div class="form-group mb-3">
+                <label asp-for="CategoryProductId" class="control-label"></label>
+                <select asp-for="CategoryProductId" class="form-control" asp-items="ViewBag.CategoryProductId"></select>
+            </div>
+            <div class="form-group mb-3">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" type="text" />
+            </div>
+            <div class="form-group mb-3">
+                <label asp-for="Description" class="control-label"></label>
+                <input asp-for="Description" class="form-control" type="text" />
+            </div>
+            <div class="form-group mb-3">
+                <label asp-for="Price" class="control-label"></label>
+                <input asp-for="Price" class="form-control" type="text" />
+            </div>
+            <div class="form-group mb-3">
+                <label asp-for="StockQuantity" class="control-label"></label>
+                <input asp-for="StockQuantity" class="form-control" type="text" />
+            </div>
+            <div class="form-group mb-3">
+                <label asp-for="ImageUrl" class="control-label"></label>
+                <input type="hidden" asp-for="ImageUrl" />
+                <input type="file" name="imageFile" class="form-control" accept="image/*" />
+                <div class="mt-2">
+                    <small class="text-muted">Ảnh hiện tại:</small><br/>
+                    @if (!string.IsNullOrEmpty(Model.ImageUrl)) {
+                        <img src="@Model.ImageUrl" style="height: 100px; border-radius: 8px; margin-top: 5px;" onerror="this.onerror=null; this.src='https://via.placeholder.com/150';" />
+                    } else {
+                        <span class="text-muted small">Chưa có ảnh</span>
+                    }
+                </div>
+            </div>
+                <div class="form-group mt-4">
+                    <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Cập nhật</button>
+                    <a asp-action="Index" class="btn btn-secondary"><i class="fas fa-arrow-left"></i> Quay lại</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

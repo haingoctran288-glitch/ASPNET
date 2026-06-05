@@ -1,0 +1,42 @@
+@model CMS.Data.Entities.User
+@{
+    ViewData["Title"] = "Thêm mới User";
+}
+
+<div class="container mt-5">
+    <div class="card shadow-sm border-0">
+        <div class="card-header bg-primary text-white">
+            <h3 class="mb-0">Thêm mới User</h3>
+        </div>
+        <div class="card-body">
+            <form asp-action="Create">
+                <div asp-validation-summary="All" class="text-danger"></div>
+                
+            <div class="form-group mb-3">
+                <label asp-for="Username" class="control-label fw-bold">Tên đăng nhập</label>
+                <input asp-for="Username" class="form-control" type="text" placeholder="Nhập tên đăng nhập" />
+            </div>
+            <div class="form-group mb-3">
+                <label class="control-label fw-bold">Mật khẩu</label>
+                <input asp-for="PasswordHash" class="form-control" type="password" placeholder="Nhập mật khẩu" />
+            </div>
+            <div class="form-group mb-3">
+                <label asp-for="FullName" class="control-label fw-bold">Họ và tên</label>
+                <input asp-for="FullName" class="form-control" type="text" placeholder="Nhập họ và tên" />
+            </div>
+            <div class="form-group mb-3">
+                <label asp-for="Role" class="control-label fw-bold">Vai trò (Role)</label>
+                <select asp-for="Role" class="form-select">
+                    <option value="Admin">Admin - Quản trị viên (Toàn quyền)</option>
+                    <option value="Editor">Editor - Biên tập viên (Hạn chế)</option>
+                </select>
+                <small class="text-muted">Admin: Toàn quyền quản trị. Editor: Không được vào trang Quản lý Người dùng.</small>
+            </div>
+                <div class="form-group mt-4">
+                    <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Lưu</button>
+                    <a asp-action="Index" class="btn btn-secondary"><i class="fas fa-arrow-left"></i> Quay lại</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
