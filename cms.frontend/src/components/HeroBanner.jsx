@@ -15,6 +15,20 @@ const HeroBanner = () => {
             .catch(err => console.error(err));
     }, []);
 
+    // Kích hoạt Carousel tự động chạy sau khi data được tải xong
+    useEffect(() => {
+        if (slides.length > 0 && window.bootstrap) {
+            const carouselElement = document.getElementById('heroCarousel');
+            if (carouselElement) {
+                // Khởi tạo và ép carousel tự động chạy (4000ms)
+                new window.bootstrap.Carousel(carouselElement, {
+                    interval: 4000,
+                    ride: 'carousel'
+                });
+            }
+        }
+    }, [slides]);
+
     if (slides.length === 0) {
         return (
             <div className="hero-banner text-white d-flex align-items-center mb-5" style={{minHeight: '80vh', background: "linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.8)), url('/banner-giay-bong-da.jpg') no-repeat center/cover", backgroundAttachment: 'fixed'}}>
