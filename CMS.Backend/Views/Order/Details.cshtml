@@ -38,8 +38,8 @@
                         @foreach(var detail in Model.OrderDetails)
                         {
                             <tr>
-                                <td>@(detail.Product?.Name ?? "N/A")</td>
-                                <td><span class="badge bg-secondary">@(detail.Size ?? "N/A")</span></td>
+                                <td>@(string.IsNullOrEmpty(detail.Product?.Name) ? "Không có" : detail.Product.Name)</td>
+                                <td><span class="badge bg-secondary">@(string.IsNullOrEmpty(detail.Size) ? "Không có" : detail.Size)</span></td>
                                 <td>@detail.Quantity</td>
                                 <td>@detail.UnitPrice.ToString("N0") đ</td>
                                 <td>@((detail.Quantity * detail.UnitPrice).ToString("N0")) đ</td>
