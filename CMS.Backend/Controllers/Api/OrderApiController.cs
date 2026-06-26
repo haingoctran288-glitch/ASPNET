@@ -4,6 +4,19 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CMS.Backend.Controllers.Api
 {
+
+    public class CheckoutRequest {
+        public int CustomerId { get; set; }
+        public string Notes { get; set; }
+        public List<CartItemRequest> Items { get; set; }
+    }
+    public class CartItemRequest {
+        public int ProductId { get; set; }
+        public int Quantity { get; set; }
+        public decimal UnitPrice { get; set; }
+        public string? Size { get; set; }
+    }
+
     [Route("api/[controller]")]
     [ApiController]
     public class OrderApiController : ControllerBase
@@ -14,6 +27,69 @@ namespace CMS.Backend.Controllers.Api
         {
             _context = context;
         }
+
+        [HttpPost("checkout")]
+        public async Task<IActionResult> Checkout([FromBody] CheckoutRequest req)
+        {
+            if (req.Items == null || !req.Items.Any()) return BadRequest("Giỏ hàng rỗng!");
+            
+            var order = new CMS.Data.Entities.Order {
+                CustomerId = req.CustomerId,
+                OrderDate = DateTime.Now,
+                Status = 0, // Chờ duyệt
+                Notes = req.Notes
+            };
+            
+            _context.Orders.Add(order);
+            await _context.SaveChangesAsync();
+
+            foreach(var item in req.Items) {
+                var detail = new CMS.Data.Entities.OrderDetail {
+                    OrderId = order.Id,
+                    ProductId = item.ProductId,
+                    Quantity = item.Quantity,
+                    UnitPrice = item.UnitPrice,
+                    Size = item.Size
+                };
+                _context.OrderDetails.Add(detail);
+                
+                // Trừ tồn kho
+                var p = await _context.Products.FindAsync(item.ProductId);
+                if (p != null) {
+                    p.StockQuantity -= item.Quantity;
+                }
+            }
+            await _context.SaveChangesAsync();
+            return Ok(new { message = "Đặt hàng thành công", orderId = order.Id });
+        }
+
+        [HttpGet("customer/{customerId}")]
+        public async Task<IActionResult> GetCustomerOrders(int customerId)
+        {
+            var orders = await _context.Orders
+                .Include(o => o.OrderDetails)
+                .ThenInclude(od => od.Product)
+                .Where(o => o.CustomerId == customerId)
+                .OrderByDescending(o => o.OrderDate)
+                .Select(o => new {
+                    o.Id,
+                    o.OrderDate,
+                    o.Status,
+                    o.Notes,
+                    TotalAmount = o.OrderDetails.Sum(d => d.Quantity * d.UnitPrice),
+                    Details = o.OrderDetails.Select(d => new {
+                        d.ProductId,
+                        d.Product.Name,
+                        d.Product.ImageUrl,
+                        d.Quantity,
+                        d.UnitPrice,
+                        d.Size
+                    })
+                })
+                .ToListAsync();
+            return Ok(orders);
+        }
+
 
         // GET: api/OrderApi
         [HttpGet]

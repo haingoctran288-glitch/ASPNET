@@ -1,4 +1,4 @@
-﻿//Sinh viên : Trần Ngọc Hải
+//Sinh viên : Trần Ngọc Hải
 //MSSV:2123110202
 //Lớp:CCQ2311F
 //Ngày tạo: 15/05/2026
@@ -30,6 +30,10 @@ namespace CMS.Data.Entities
         public int StockQuantity { get; set; }
 
         public string? ImageUrl { get; set; }
+
+        public string ProductTag { get; set; } = "Thường"; // "Thường", "HOT", "Mới"
+
+        public string? Sizes { get; set; } // Ví dụ: "39,40,41,42"
 
         // Khóa ngoại nối tới CategoryProduct
         public int CategoryProductId { get; set; }

@@ -19,8 +19,34 @@ namespace CMS.Backend.Controllers.Api
         [HttpGet]
         public async Task<IActionResult> GetProducts()
         {
-            var products = await _context.Products.ToListAsync();
-            return Ok(products);
+            var items = await _context.Products.ToListAsync();
+            return Ok(items);
+        }
+
+        // GET: api/ProductApi/newest
+        [HttpGet("newest")]
+        public async Task<IActionResult> GetNewestProducts()
+        {
+            var items = await _context.Products.Where(p => p.ProductTag == "Mới").ToListAsync();
+            // Fallback nếu chưa gắn tag nào để tránh trang bị trống
+            if (!items.Any())
+            {
+                items = await _context.Products.OrderByDescending(p => p.Id).Take(3).ToListAsync();
+            }
+            return Ok(items);
+        }
+
+        // GET: api/ProductApi/hot
+        [HttpGet("hot")]
+        public async Task<IActionResult> GetHotProducts()
+        {
+            var items = await _context.Products.Where(p => p.ProductTag == "HOT").ToListAsync();
+            // Fallback nếu chưa gắn tag nào để tránh trang bị trống
+            if (!items.Any())
+            {
+                items = await _context.Products.OrderBy(p => p.StockQuantity).Take(3).ToListAsync();
+            }
+            return Ok(items);
         }
 
         // GET: api/ProductApi/5
@@ -35,6 +61,14 @@ namespace CMS.Backend.Controllers.Api
             }
 
             return Ok(product);
+        }
+
+        // GET: api/ProductApi/category/5
+        [HttpGet("category/{categoryId}")]
+        public async Task<IActionResult> GetProductsByCategory(int categoryId)
+        {
+            var items = await _context.Products.Where(p => p.CategoryProductId == categoryId).ToListAsync();
+            return Ok(items);
         }
     }
 }

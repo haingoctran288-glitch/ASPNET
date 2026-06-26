@@ -1,4 +1,4 @@
-﻿//Sinh viên : Trần Ngọc Hải
+//Sinh viên : Trần Ngọc Hải
 //MSSV:2123110202
 //Lớp:CCQ2311F
 //Ngày tạo: 15/05/2026
@@ -23,6 +23,8 @@ namespace CMS.Data.Entities
         public int ProductId { get; set; }
 
         public int Quantity { get; set; }
+
+        public string? Size { get; set; }
 
         [Column(TypeName = "decimal(18,2)")]
         public decimal UnitPrice { get; set; } // Giá tại thời điểm mua
