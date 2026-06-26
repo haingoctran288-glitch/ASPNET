@@ -121,7 +121,7 @@ namespace CMS.Backend.Controllers.Api
                 query = query.Where(o => o.Status == status.Value);
             }
 
-            var items = await query.ToListAsync();
+            var items = await query.OrderByDescending(o => o.OrderDate).ThenByDescending(o => o.Id).ToListAsync();
             return Ok(items);
         }
 

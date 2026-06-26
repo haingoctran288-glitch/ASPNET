@@ -18,7 +18,7 @@ namespace CMS.Backend.Controllers
 
         public IActionResult Index()
         {
-            var list = _context.Orders.Include(x => x.Customer).ToList();
+            var list = _context.Orders.Include(x => x.Customer).OrderByDescending(x => x.OrderDate).ThenByDescending(x => x.Id).ToList();
             return View(list);
         }
 
