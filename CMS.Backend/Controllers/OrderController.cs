@@ -47,7 +47,11 @@ namespace CMS.Backend.Controllers
         
         public IActionResult Details(int id)
         {
-            var model = _context.Orders.Include(x => x.Customer).FirstOrDefault(m => m.Id == id);
+            var model = _context.Orders
+                .Include(x => x.Customer)
+                .Include(x => x.OrderDetails)
+                .ThenInclude(d => d.Product)
+                .FirstOrDefault(m => m.Id == id);
             if (model == null) return NotFound();
             return View(model);
         }

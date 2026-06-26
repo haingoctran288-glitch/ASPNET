@@ -35,15 +35,21 @@
                     <div class="card product-card shadow border-0 h-100 rounded-4">
 
                         <!-- IMAGE -->
-                        <div class="overflow-hidden rounded-top-4"
+                        <div class="overflow-hidden rounded-top-4 position-relative"
                              style="height:250px;">
+                            
+                            @if (item.ProductTag == "HOT") {
+                                <span class="badge bg-danger position-absolute top-0 start-0 m-3 px-3 py-2 rounded-pill shadow-sm" style="z-index: 1;"><i class="bi bi-fire me-1"></i>HOT</span>
+                            } else if (item.ProductTag == "Mới") {
+                                <span class="badge bg-success position-absolute top-0 start-0 m-3 px-3 py-2 rounded-pill shadow-sm" style="z-index: 1;"><i class="bi bi-stars me-1"></i>MỚI</span>
+                            }
 
                             <img src="@(string.IsNullOrEmpty(item.ImageUrl)
                                                                          ? "https://via.placeholder.com/400x250?text=No+Image"
                                                                          : item.ImageUrl)"
-                         class="w-100 h-100 product-img"
-                         style="object-fit:cover;"
-                         alt="@item.Name" />
+                          class="w-100 h-100 product-img"
+                          style="object-fit:cover;"
+                          alt="@item.Name" />
 
                         </div>
 
@@ -57,6 +63,9 @@
                             <p class="text-muted small">
                                 @item.Description
                             </p>
+                            @if(!string.IsNullOrEmpty(item.Sizes)) {
+                                <p class="small mb-0"><strong>Size:</strong> @item.Sizes</p>
+                            }
 
                             <div class="d-flex justify-content-between align-items-center mt-4">
 

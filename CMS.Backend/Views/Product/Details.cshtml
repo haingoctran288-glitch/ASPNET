@@ -19,6 +19,10 @@
                 <dd class="col-sm-9">@Html.DisplayFor(model => model.Price)</dd>
                 <dt class="col-sm-3">@Html.DisplayNameFor(model => model.StockQuantity)</dt>
                 <dd class="col-sm-9">@Html.DisplayFor(model => model.StockQuantity)</dd>
+                <dt class="col-sm-3">Size giày</dt>
+                <dd class="col-sm-9">@Html.DisplayFor(model => model.Sizes)</dd>
+                <dt class="col-sm-3">Phân loại</dt>
+                <dd class="col-sm-9">@Html.DisplayFor(model => model.ProductTag)</dd>
                 <dt class="col-sm-3">@Html.DisplayNameFor(model => model.ImageUrl)</dt>
                 <dd class="col-sm-9">
                     @if (!string.IsNullOrEmpty(Model.ImageUrl))

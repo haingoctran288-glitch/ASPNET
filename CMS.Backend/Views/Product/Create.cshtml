@@ -33,6 +33,18 @@
                 <input asp-for="StockQuantity" class="form-control" type="text" />
             </div>
             <div class="form-group mb-3">
+                <label asp-for="ProductTag" class="control-label">Phân loại sản phẩm</label>
+                <select asp-for="ProductTag" class="form-control">
+                    <option value="Thường">Sản phẩm thường</option>
+                    <option value="HOT">Sản phẩm HOT</option>
+                    <option value="Mới">Sản phẩm mới nhất</option>
+                </select>
+            </div>
+            <div class="form-group mb-3">
+                <label asp-for="Sizes" class="control-label">Size giày (Cách nhau bằng dấu phẩy)</label>
+                <input asp-for="Sizes" class="form-control" type="text" placeholder="VD: 39,40,41,42" />
+            </div>
+            <div class="form-group mb-3">
                 <label asp-for="ImageUrl" class="control-label"></label>
                 <input type="file" name="imageFile" class="form-control" accept="image/*" />
                 <span class="text-muted small">Chọn ảnh từ máy tính của bạn</span>
