@@ -10,7 +10,7 @@ namespace CMS.Backend.Services
             try
             {
                 // BẠN VUI LÒNG ĐIỀN ĐỊA CHỈ GMAIL CỦA BẠN VÀO DÒNG DƯỚI ĐÂY THAY CHO "GMAIL_CUA_BAN_O_DAY@gmail.com"
-                var fromAddress = new MailAddress("GMAIL_CUA_BAN_O_DAY@gmail.com", "Hai Sport");
+                var fromAddress = new MailAddress("haingoctran288@gmail.com", "Hai Sport");
                 var toAddress = new MailAddress(toEmail);
                 
                 // Mật khẩu ứng dụng (App Password) bạn vừa cung cấp
