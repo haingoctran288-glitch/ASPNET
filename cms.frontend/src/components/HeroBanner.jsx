@@ -81,8 +81,8 @@ const HeroBanner = () => {
                                         <p className="lead mb-5 text-light" style={{fontSize: '1.2rem', maxWidth: '600px', lineHeight: '1.6', display: '-webkit-box', WebkitLineClamp: 3, WebkitBoxOrient: 'vertical', overflow: 'hidden', textShadow: '0 2px 10px rgba(0,0,0,0.8)'}}>
                                             {getPlainText(item.content)}
                                         </p>
-                                        <div className="d-flex align-items-center gap-4">
-                                            <Link to={`/post/${item.id}`} className="btn btn-accent px-5 py-3 fw-bold text-uppercase d-inline-flex align-items-center shadow-lg" style={{fontSize: '1.2rem', fontFamily: 'Oswald', letterSpacing: '1px'}}>
+                                        <div className="d-flex align-items-center gap-4 mt-2">
+                                            <Link to={`/post/${item.id}`} className="btn btn-danger px-5 py-3 fw-bold text-uppercase d-inline-flex align-items-center btn-glow rounded-pill border-0" style={{fontSize: '1.2rem', fontFamily: 'Oswald', letterSpacing: '1px'}}>
                                                 ĐỌC TIN TỨC <i className="fas fa-arrow-right ms-3"></i>
                                             </Link>
                                         </div>

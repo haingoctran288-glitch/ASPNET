@@ -142,3 +142,25 @@ h1, h2, h3, h4, h5, h6, .brand-font {
     .dropdown:hover .dropdown-menu { display: block; visibility: visible; opacity: 1; transition: all 0.3s; margin-top: 0 !important; }
     .dropdown-menu { display: block; visibility: hidden; opacity: 0; transition: all 0.3s; margin-top: 10px; }
 }
+
+@keyframes glowPulse {
+    0% { box-shadow: 0 0 5px rgba(227, 0, 15, 0.5); }
+    50% { box-shadow: 0 0 20px rgba(227, 0, 15, 0.9), 0 0 30px rgba(227, 0, 15, 0.6); }
+    100% { box-shadow: 0 0 5px rgba(227, 0, 15, 0.5); }
+}
+
+.btn-glow {
+    animation: glowPulse 2s infinite;
+}
+
+.btn-buy-now {
+    background: linear-gradient(45deg, #e3000f, #ff4d4d);
+    color: white !important;
+    border: none;
+    transition: all 0.3s ease;
+}
+
+.btn-buy-now:hover {
+    background: linear-gradient(45deg, #cc0000, #e60000);
+    transform: scale(1.05);
+}
