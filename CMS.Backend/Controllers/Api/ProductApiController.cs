@@ -17,6 +17,7 @@ namespace CMS.Backend.Controllers.Api
 
         // GET: api/ProductApi
         [HttpGet]
+        [ProducesResponseType(typeof(IEnumerable<CMS.Data.Entities.Product>), StatusCodes.Status200OK)]
         public async Task<IActionResult> GetProducts()
         {
             var items = await _context.Products.ToListAsync();
@@ -25,6 +26,7 @@ namespace CMS.Backend.Controllers.Api
 
         // GET: api/ProductApi/newest
         [HttpGet("newest")]
+        [ProducesResponseType(typeof(IEnumerable<CMS.Data.Entities.Product>), StatusCodes.Status200OK)]
         public async Task<IActionResult> GetNewestProducts()
         {
             var items = await _context.Products.Where(p => p.ProductTag == "Mới").ToListAsync();
@@ -38,6 +40,7 @@ namespace CMS.Backend.Controllers.Api
 
         // GET: api/ProductApi/hot
         [HttpGet("hot")]
+        [ProducesResponseType(typeof(IEnumerable<CMS.Data.Entities.Product>), StatusCodes.Status200OK)]
         public async Task<IActionResult> GetHotProducts()
         {
             var items = await _context.Products.Where(p => p.ProductTag == "HOT").ToListAsync();
@@ -51,6 +54,8 @@ namespace CMS.Backend.Controllers.Api
 
         // GET: api/ProductApi/5
         [HttpGet("{id}")]
+        [ProducesResponseType(typeof(CMS.Data.Entities.Product), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> GetProduct(int id)
         {
             var product = await _context.Products.FindAsync(id);
@@ -65,6 +70,7 @@ namespace CMS.Backend.Controllers.Api
 
         // GET: api/ProductApi/category/5
         [HttpGet("category/{categoryId}")]
+        [ProducesResponseType(typeof(IEnumerable<CMS.Data.Entities.Product>), StatusCodes.Status200OK)]
         public async Task<IActionResult> GetProductsByCategory(int categoryId)
         {
             var items = await _context.Products.Where(p => p.CategoryProductId == categoryId).ToListAsync();

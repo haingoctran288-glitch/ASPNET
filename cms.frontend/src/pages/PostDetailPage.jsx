@@ -41,11 +41,8 @@ const PostDetailPage = () => {
                             <img src={fullImg} alt={post.title} className="w-100" style={{maxHeight: '600px', objectFit: 'cover'}} />
                         </div>
                         
-                        <div className="post-content" style={{fontFamily: 'Inter', lineHeight: '1.8', fontSize: '1.1rem', color: '#444'}}>
-                            {/* Normally this would be dangerouslySetInnerHTML if using a rich text editor, but since it's just a text content string, we can split by newline or render directly */}
-                            {post.content.split('\n').map((line, idx) => (
-                                <p key={idx} className="mb-4">{line}</p>
-                            ))}
+                        <div className="post-content" style={{fontFamily: 'Inter', lineHeight: '1.8', fontSize: '1.1rem', color: '#444'}}
+                             dangerouslySetInnerHTML={{ __html: post.content }}>
                         </div>
                     </div>
                 </div>

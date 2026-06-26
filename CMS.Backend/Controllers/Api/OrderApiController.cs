@@ -29,6 +29,8 @@ namespace CMS.Backend.Controllers.Api
         }
 
         [HttpPost("checkout")]
+        [ProducesResponseType(typeof(object), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> Checkout([FromBody] CheckoutRequest req)
         {
             if (req.Items == null || !req.Items.Any()) return BadRequest("Giỏ hàng rỗng!");
@@ -74,6 +76,7 @@ namespace CMS.Backend.Controllers.Api
         }
 
         [HttpGet("customer/{customerId}")]
+        [ProducesResponseType(typeof(IEnumerable<object>), StatusCodes.Status200OK)]
         public async Task<IActionResult> GetCustomerOrders(int customerId)
         {
             var orders = await _context.Orders
@@ -103,6 +106,7 @@ namespace CMS.Backend.Controllers.Api
 
         // GET: api/OrderApi
         [HttpGet]
+        [ProducesResponseType(typeof(IEnumerable<CMS.Data.Entities.Order>), StatusCodes.Status200OK)]
         public async Task<IActionResult> GetOrders()
         {
             var items = await _context.Orders.ToListAsync();
@@ -111,6 +115,8 @@ namespace CMS.Backend.Controllers.Api
 
         // GET: api/OrderApi/5
         [HttpGet("{id}")]
+        [ProducesResponseType(typeof(CMS.Data.Entities.Order), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> GetOrder(int id)
         {
             var item = await _context.Orders.FindAsync(id);

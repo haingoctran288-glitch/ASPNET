@@ -1,18 +1,44 @@
-import React, { useEffect, useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import React, { useEffect, useState, useContext } from 'react';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import MainLayout from '../layouts/MainLayout';
 import axiosClient from '../api/axiosClient';
-
+import { CartContext } from '../context/CartContext';
 const ProductsPage = () => {
     const [products, setProducts] = useState([]);
     const [loading, setLoading] = useState(true);
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 8;
     const location = useLocation();
+    const navigate = useNavigate();
+    const { addToCart } = useContext(CartContext);
     
     // Parse query parameter
     const queryParams = new URLSearchParams(location.search);
     const categoryId = queryParams.get('category');
+
+    const handleBuyNow = (p) => {
+        let defaultSize = '';
+        if (p.sizes) {
+            defaultSize = p.sizes.split(',')[0].trim();
+        }
+        
+        let currentCart = JSON.parse(localStorage.getItem('cart')) || [];
+        const existing = currentCart.find(i => i.id === p.id && i.selectedSize === defaultSize);
+        let cartItemId = Date.now().toString();
+        
+        if(!existing) {
+            const newItem = { ...p, quantity: 1, selectedSize: defaultSize, cartItemId };
+            currentCart.push(newItem);
+            localStorage.setItem('cart', JSON.stringify(currentCart));
+        } else {
+            cartItemId = existing.cartItemId;
+            existing.quantity += 1;
+            localStorage.setItem('cart', JSON.stringify(currentCart));
+        }
+        
+        localStorage.setItem('selectedItems', JSON.stringify([cartItemId]));
+        window.location.href = '/checkout';
+    };
 
     useEffect(() => {
         setLoading(true);
@@ -71,10 +97,18 @@ const ProductsPage = () => {
                                                 <span className="fs-5 fw-bold text-dark">{p.price.toLocaleString('vi-VN')} ₫</span>
                                             </div>
                                         </div>
-                                        <div className="card-footer bg-transparent border-0 p-4 pt-0">
-                                            <Link to={`/product/${p.id}`} className="btn-premium d-block w-100 text-center text-decoration-none py-2">
-                                                XEM CHI TIẾT
-                                            </Link>
+                                        <div className="card-footer bg-transparent border-0 p-3 pt-0">
+                                            <div className="d-flex gap-2 w-100">
+                                                <Link to={`/product/${p.id}`} className="btn-premium d-flex align-items-center justify-content-center text-decoration-none py-2" style={{flex: '6'}}>
+                                                    XEM CHI TIẾT
+                                                </Link>
+                                                <button 
+                                                    onClick={() => handleBuyNow(p)} 
+                                                    disabled={p.stockQuantity <= 0}
+                                                    className="btn-buy-now d-flex align-items-center justify-content-center py-2 text-uppercase fw-bold shadow-sm" style={{flex: '4', fontFamily: 'Oswald', letterSpacing: '0.5px'}}>
+                                                    MUA NGAY
+                                                </button>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
