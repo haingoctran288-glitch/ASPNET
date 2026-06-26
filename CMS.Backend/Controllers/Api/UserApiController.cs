@@ -24,7 +24,7 @@ namespace CMS.Backend.Controllers.Api
 
             if (!string.IsNullOrEmpty(search))
             {
-                query = query.Where(u => u.Username.Contains(search) || u.FullName.Contains(search) || u.Email.Contains(search));
+                query = query.Where(u => u.Username.Contains(search) || u.FullName.Contains(search));
             }
 
             var items = await query.ToListAsync();
