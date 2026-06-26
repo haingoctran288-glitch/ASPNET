@@ -14,7 +14,7 @@
                 <dt class="col-sm-3">@Html.DisplayNameFor(model => model.Title)</dt>
                 <dd class="col-sm-9">@Html.DisplayFor(model => model.Title)</dd>
                 <dt class="col-sm-3">@Html.DisplayNameFor(model => model.Content)</dt>
-                <dd class="col-sm-9">@Html.DisplayFor(model => model.Content)</dd>
+                <dd class="col-sm-9">@Html.Raw(Model.Content)</dd>
                 <dt class="col-sm-3">@Html.DisplayNameFor(model => model.ImageUrl)</dt>
                 <dd class="col-sm-9">
                     @if (!string.IsNullOrEmpty(Model.ImageUrl))

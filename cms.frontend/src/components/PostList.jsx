@@ -39,7 +39,13 @@ const PostList = ({ title = "Tin tức", endpoint = "/PostApi", paginate = false
                                 <Link to={`/post/${p.id}`} className="text-decoration-none">
                                     <h5 className="card-title fw-bold mt-2 text-dark line-clamp-2 text-uppercase" style={{lineHeight: '1.4', fontFamily: 'Oswald'}}>{p.title}</h5>
                                 </Link>
-                                <p className="card-text text-secondary small line-clamp-3 mt-3">{p.content}</p>
+                                <div className="card-text text-secondary small line-clamp-3 mt-3">
+                                    {(() => {
+                                        if (!p.content) return '';
+                                        const doc = new DOMParser().parseFromString(p.content, 'text/html');
+                                        return doc.body.textContent || "";
+                                    })()}
+                                </div>
                             </div>
                             <div className="card-footer bg-transparent border-0 p-4 pt-0 mt-auto">
                                 <Link to={`/post/${p.id}`} className="btn-premium d-block w-100 text-center text-decoration-none py-2">

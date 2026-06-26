@@ -54,9 +54,14 @@
                                 @item.Title
                             </h5>
 
-                            <p class="card-text text-secondary small line-clamp-3 mb-4">
-                                @item.Content
-                            </p>
+                            <div class="card-text text-secondary small line-clamp-3 mb-4">
+                                @{
+                                    var plainText = item.Content ?? "";
+                                    plainText = System.Text.RegularExpressions.Regex.Replace(plainText, "<.*?>", String.Empty);
+                                    plainText = System.Net.WebUtility.HtmlDecode(plainText);
+                                }
+                                @plainText
+                            </div>
 
                             <p class="text-muted small mb-0">
                                 <i class="bi bi-calendar-event"></i>
