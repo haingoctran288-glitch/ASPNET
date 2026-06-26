@@ -22,9 +22,9 @@ namespace CMS.Backend.Controllers
             return View(list);
         }
 
-        public IActionResult Create()
+        public IActionResult Create(int? orderId = null)
         {
-            ViewData["OrderId"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(_context.Orders, "Id", "Id");
+            ViewData["OrderId"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(_context.Orders, "Id", "Id", orderId);
             ViewData["ProductId"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(_context.Products, "Id", "Name");
             return View();
         }
@@ -39,7 +39,7 @@ namespace CMS.Backend.Controllers
             {
                 _context.OrderDetails.Add(model);
                 _context.SaveChanges();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Details", "Order", new { id = model.OrderId });
             }
             ViewData["OrderId"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(_context.Orders, "Id", "Id", model.OrderId);
             ViewData["ProductId"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(_context.Products, "Id", "Name", model.ProductId);
@@ -74,7 +74,7 @@ namespace CMS.Backend.Controllers
             {
                 _context.OrderDetails.Update(model);
                 _context.SaveChanges();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Details", "Order", new { id = model.OrderId });
             }
             ViewData["OrderId"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(_context.Orders, "Id", "Id", model.OrderId);
             ViewData["ProductId"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(_context.Products, "Id", "Name", model.ProductId);
@@ -87,6 +87,7 @@ namespace CMS.Backend.Controllers
         {
             var model = _context.OrderDetails.Find(id);
             if (model == null) return NotFound();
+            var orderId = model.OrderId;
             
             try
             {
@@ -96,9 +97,9 @@ namespace CMS.Backend.Controllers
             catch (DbUpdateException)
             {
                 TempData["ErrorMessage"] = "Không thể xóa vì dữ liệu này đang được liên kết với dữ liệu khác.";
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Details", "Order", new { id = orderId });
             }
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction("Details", "Order", new { id = orderId });
         }
     }
 }
