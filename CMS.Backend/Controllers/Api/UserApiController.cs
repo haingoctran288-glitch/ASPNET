@@ -17,9 +17,17 @@ namespace CMS.Backend.Controllers.Api
 
         // GET: api/UserApi
         [HttpGet]
-        public async Task<IActionResult> GetUsers()
+        [ProducesResponseType(typeof(IEnumerable<CMS.Data.Entities.User>), StatusCodes.Status200OK)]
+        public async Task<IActionResult> GetUsers([FromQuery] string? search = null)
         {
-            var items = await _context.Users.ToListAsync();
+            var query = _context.Users.AsQueryable();
+
+            if (!string.IsNullOrEmpty(search))
+            {
+                query = query.Where(u => u.Username.Contains(search) || u.FullName.Contains(search) || u.Email.Contains(search));
+            }
+
+            var items = await query.ToListAsync();
             return Ok(items);
         }
 

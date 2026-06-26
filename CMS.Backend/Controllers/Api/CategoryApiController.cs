@@ -17,9 +17,17 @@ namespace CMS.Backend.Controllers.Api
 
         // GET: api/CategoryApi
         [HttpGet]
-        public async Task<IActionResult> GetCategorys()
+        [ProducesResponseType(typeof(IEnumerable<CMS.Data.Entities.Category>), StatusCodes.Status200OK)]
+        public async Task<IActionResult> GetCategorys([FromQuery] string? search = null)
         {
-            var items = await _context.Categories.ToListAsync();
+            var query = _context.Categories.AsQueryable();
+
+            if (!string.IsNullOrEmpty(search))
+            {
+                query = query.Where(c => c.Name.Contains(search) || c.Description.Contains(search));
+            }
+
+            var items = await query.ToListAsync();
             return Ok(items);
         }
 
