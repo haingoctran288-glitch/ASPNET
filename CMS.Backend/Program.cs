@@ -19,9 +19,9 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
 // Cấu hình CORS
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowAll", builder =>
+    options.AddPolicy("AllowReactApp", builder =>
     {
-        builder.AllowAnyOrigin()
+        builder.WithOrigins("http://localhost:3000", "http://127.0.0.1:3000")
                .AllowAnyMethod()
                .AllowAnyHeader();
     });
@@ -71,7 +71,7 @@ app.UseStaticFiles();
 app.UseRouting();
 
 // Sử dụng CORS
-app.UseCors("AllowAll");
+app.UseCors("AllowReactApp");
 
 // Sử dụng Swagger
 app.UseSwagger();
@@ -84,6 +84,10 @@ app.UseAuthentication();
 
 app.UseAuthorization();
 
+// Ánh xạ API Controllers
+app.MapControllers();
+
+// Giữ định tuyến Web MVC cũ
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
