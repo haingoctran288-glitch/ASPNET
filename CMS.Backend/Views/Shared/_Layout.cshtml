@@ -88,7 +88,10 @@
                 <div class="d-flex align-items-center">
                     <div class="dropdown">
                         <a class="text-decoration-none text-dark d-flex align-items-center gap-2" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            <span class="fw-semibold">@(User.Identity.IsAuthenticated ? User.Claims.FirstOrDefault(c => c.Type == "FullName")?.Value ?? User.Identity.Name : "Khách")</span>
+                            <div class="text-end d-none d-sm-block">
+                                <span class="fw-semibold d-block">@(User.Identity.IsAuthenticated ? User.Claims.FirstOrDefault(c => c.Type == "FullName")?.Value ?? User.Identity.Name : "Khách")</span>
+                                <small class="badge bg-primary text-white" style="font-size: 0.7rem; padding: 2px 6px;">@(User.Identity.IsAuthenticated ? User.Claims.FirstOrDefault(c => c.Type == System.Security.Claims.ClaimTypes.Role)?.Value : "")</small>
+                            </div>
                             <img src="https://ui-avatars.com/api/?name=@(User.Identity.Name)&background=4e73df&color=fff&rounded=true" width="35" height="35" alt="Avatar">
                         </a>
                         <ul class="dropdown-menu dropdown-menu-end shadow-custom border-0 mt-2">

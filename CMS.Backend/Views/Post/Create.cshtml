@@ -22,7 +22,7 @@
             </div>
             <div class="form-group mb-3">
                 <label asp-for="Content" class="control-label"></label>
-                <input asp-for="Content" class="form-control" type="text" />
+                <textarea asp-for="Content" class="form-control" rows="8" id="ContentEditor"></textarea>
             </div>
             <div class="form-group mb-3">
                 <label asp-for="ImageUrl" class="control-label"></label>
@@ -41,3 +41,10 @@
         </div>
     </div>
 </div>
+
+@section Scripts {
+    <script src="https://cdn.ckeditor.com/4.22.1/standard/ckeditor.js"></script>
+    <script>
+        CKEDITOR.replace('ContentEditor');
+    </script>
+}
