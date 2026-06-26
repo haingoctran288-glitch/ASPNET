@@ -9,7 +9,8 @@ const Header = () => {
     const [postCats, setPostCats] = useState([]);
     
     // Auth state
-    const customer = JSON.parse(localStorage.getItem('customer'));
+    const rawCustomer = JSON.parse(localStorage.getItem('customer'));
+    const customer = rawCustomer?.customer ? rawCustomer.customer : rawCustomer;
     const { cart } = useContext(CartContext);
 
     useEffect(() => {
@@ -80,8 +81,8 @@ const Header = () => {
                     {customer ? (
                         <div className="dropdown">
                             <span className="text-dark text-decoration-none fw-bold dropdown-toggle d-flex align-items-center gap-2" role="button" data-bs-toggle="dropdown" style={{cursor: 'pointer', fontFamily: 'Oswald', letterSpacing: '0.5px'}}>
-                                <img src={`https://ui-avatars.com/api/?name=${customer.fullName}&background=111&color=fff`} width="30" alt="Avatar" className="rounded-circle"/>
-                                {customer.fullName.toUpperCase()}
+                                <img src={`https://ui-avatars.com/api/?name=${customer?.fullName || 'User'}&background=111&color=fff`} width="30" alt="Avatar" className="rounded-circle"/>
+                                {(customer?.fullName || 'User').toUpperCase()}
                             </span>
                             <ul className="dropdown-menu dropdown-menu-end border-0 shadow-sm rounded-0 mt-3" style={{right: 0, left: "auto"}}>
                                 <li><Link className="dropdown-item py-2" to="/profile"><i className="fas fa-user-circle me-2"></i>Hồ sơ cá nhân</Link></li>

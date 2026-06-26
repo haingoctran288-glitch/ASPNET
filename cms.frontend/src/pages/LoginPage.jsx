@@ -14,7 +14,7 @@ const LoginPage = () => {
         e.preventDefault();
         try {
             const res = await axiosClient.post('/CustomerApi/login', { email, password });
-            localStorage.setItem('customer', JSON.stringify(res.data));
+            localStorage.setItem('customer', JSON.stringify(res.data.customer));
             navigate('/');
         } catch (err) {
             setError(err.response?.data?.message || 'Lỗi đăng nhập');

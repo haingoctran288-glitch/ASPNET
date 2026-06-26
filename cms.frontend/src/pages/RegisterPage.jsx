@@ -17,13 +17,13 @@ const RegisterPage = () => {
             return;
         }
         try {
-            const res = await axiosClient.post('/CustomerApi/register', { 
+            await axiosClient.post('/CustomerApi/register', { 
                 fullName: formData.fullName, 
                 email: formData.email, 
                 password: formData.password 
             });
-            localStorage.setItem('customer', JSON.stringify(res.data));
-            navigate('/');
+            alert('Đăng ký thành công! Vui lòng đăng nhập.');
+            navigate('/login');
         } catch (err) {
             setError(err.response?.data?.message || 'Lỗi đăng ký');
         }
