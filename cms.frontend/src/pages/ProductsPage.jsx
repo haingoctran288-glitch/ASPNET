@@ -57,7 +57,7 @@ const ProductsPage = () => {
             });
             
         // Lấy banner
-        axiosClient.get('/BannerApi')
+        axiosClient.get('/PostApi/banners')
             .then(res => {
                 if(res.data && res.data.length > 0) {
                     const imgUrl = res.data[0].imageUrl;

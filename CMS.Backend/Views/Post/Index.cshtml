@@ -45,6 +45,11 @@
                             <div class="category-badge">
                                 #@item.Id
                             </div>
+                            @if(item.IsBanner) {
+                                <div class="position-absolute" style="top: 15px; right: 15px;">
+                                    <span class="badge bg-warning text-dark px-3 py-2 rounded-pill shadow-sm fw-bold"><i class="fas fa-star text-danger me-1"></i> BANNER</span>
+                                </div>
+                            }
                         </div>
 
                         <!-- BODY -->

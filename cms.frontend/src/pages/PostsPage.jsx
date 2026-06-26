@@ -12,7 +12,7 @@ const PostsPage = () => {
     const [bannerUrl, setBannerUrl] = useState('/banner-giay-bong-da.jpg');
     
     useEffect(() => {
-        axiosClient.get('/BannerApi')
+        axiosClient.get('/PostApi/banners')
             .then(res => {
                 if(res.data && res.data.length > 0) {
                     const imgUrl = res.data[0].imageUrl;

@@ -29,6 +29,12 @@
                 <input type="file" name="imageFile" class="form-control" accept="image/*" />
                 <span class="text-muted small">Chọn ảnh từ máy tính của bạn</span>
             </div>
+            <div class="form-group form-check mb-4 mt-3">
+                <label class="form-check-label fw-bold text-success">
+                    <input class="form-check-input" asp-for="IsBanner" /> @Html.DisplayNameFor(model => model.IsBanner)
+                </label>
+                <small class="d-block text-muted">Nếu chọn, ảnh và tiêu đề của bài viết này sẽ được hiển thị trên banner trang chủ / trang bài viết.</small>
+            </div>
 
                 <div class="form-group mt-4">
                     <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Lưu</button>

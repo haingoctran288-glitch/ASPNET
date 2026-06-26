@@ -1,4 +1,4 @@
-﻿//Sinh viên : Trần Ngọc Hải
+//Sinh viên : Trần Ngọc Hải
 //MSSV:2123110202
 //Lớp:CCQ2311F
 //Ngày tạo: 15/05/2026
@@ -20,6 +20,7 @@ namespace CMS.Data.Entities
             public string Content { get; set; } // Nội dung chi tiết
             public string ImageUrl { get; set; } // Hình ảnh đại diện
             public DateTime CreatedDate { get; set; } = DateTime.Now;
+            public bool IsBanner { get; set; } = false;
 
             // Khóa ngoại liên kết tới Category
             public int CategoryId { get; set; }

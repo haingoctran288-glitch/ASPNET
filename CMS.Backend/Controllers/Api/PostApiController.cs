@@ -45,6 +45,15 @@ namespace CMS.Backend.Controllers.Api
             return Ok(items);
         }
 
+        // GET: api/PostApi/banners
+        [HttpGet("banners")]
+        [ProducesResponseType(typeof(IEnumerable<CMS.Data.Entities.Post>), StatusCodes.Status200OK)]
+        public async Task<IActionResult> GetBannerPosts()
+        {
+            var items = await _context.Posts.Where(p => p.IsBanner).OrderByDescending(p => p.CreatedDate).ToListAsync();
+            return Ok(items);
+        }
+
         // GET: api/PostApi/5
         [HttpGet("{id}")]
         [ProducesResponseType(typeof(CMS.Data.Entities.Post), StatusCodes.Status200OK)]

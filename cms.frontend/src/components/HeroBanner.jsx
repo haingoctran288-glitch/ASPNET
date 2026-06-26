@@ -6,10 +6,10 @@ const HeroBanner = () => {
     const [slides, setSlides] = useState([]);
 
     useEffect(() => {
-        // Lấy danh sách Bài viết/Tin tức mới nhất làm banner (Theo đúng tiêu chí 26: lấy từ Post)
-        axiosClient.get('/PostApi/newest')
+        // Lấy danh sách Bài viết được đánh dấu làm banner
+        axiosClient.get('/PostApi/banners')
             .then(res => {
-                setSlides(res.data.slice(0, 3));
+                setSlides(res.data);
             })
             .catch(err => console.error(err));
     }, []);
