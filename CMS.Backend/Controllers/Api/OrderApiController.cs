@@ -60,6 +60,16 @@ namespace CMS.Backend.Controllers.Api
                 }
             }
             await _context.SaveChangesAsync();
+
+            // Lấy thông tin khách hàng để gửi email
+            var customer = await _context.Customers.FindAsync(req.CustomerId);
+            if (customer != null && !string.IsNullOrEmpty(customer.Email))
+            {
+                decimal totalAmount = req.Items.Sum(i => i.Quantity * i.UnitPrice);
+                // Gọi EmailService để gửi mail (bất đồng bộ)
+                _ = CMS.Backend.Services.EmailService.SendOrderConfirmationEmail(customer.Email, customer.FullName, order.Id, totalAmount);
+            }
+
             return Ok(new { message = "Đặt hàng thành công", orderId = order.Id });
         }
 
