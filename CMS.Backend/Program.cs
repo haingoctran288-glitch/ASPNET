@@ -64,7 +64,7 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
-app.UseHttpsRedirection();
+// app.UseHttpsRedirection(); // Tắt để tránh redirect 307 gây CORS lỗi khi dev
 
 app.UseStaticFiles();
 

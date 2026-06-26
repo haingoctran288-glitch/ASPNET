@@ -38,6 +38,7 @@ namespace CMS.Backend.Controllers
         public async Task<IActionResult> Create(Post model, IFormFile? imageFile)
         {
             ModelState.Remove("Category");
+            ModelState.Remove("ImageUrl");
             if (ModelState.IsValid)
             {
                 if (imageFile != null && imageFile.Length > 0)
@@ -51,6 +52,10 @@ namespace CMS.Backend.Controllers
                         await imageFile.CopyToAsync(fileStream);
                     }
                     model.ImageUrl = "/images/" + uniqueFileName;
+                }
+                else
+                {
+                    model.ImageUrl = "https://via.placeholder.com/600x400"; // default placeholder
                 }
                 
                 _context.Posts.Add(model);
@@ -84,6 +89,7 @@ namespace CMS.Backend.Controllers
             if (id != model.Id) return NotFound();
 
             ModelState.Remove("Category");
+            ModelState.Remove("ImageUrl");
             if (ModelState.IsValid)
             {
                 if (imageFile != null && imageFile.Length > 0)

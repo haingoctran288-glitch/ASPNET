@@ -23,6 +23,14 @@ namespace CMS.Backend.Controllers.Api
             return Ok(items);
         }
 
+        // GET: api/PostApi/newest
+        [HttpGet("newest")]
+        public async Task<IActionResult> GetNewestPosts()
+        {
+            var items = await _context.Posts.OrderByDescending(p => p.CreatedDate).Take(3).ToListAsync();
+            return Ok(items);
+        }
+
         // GET: api/PostApi/5
         [HttpGet("{id}")]
         public async Task<IActionResult> GetPost(int id)
@@ -35,6 +43,14 @@ namespace CMS.Backend.Controllers.Api
             }
 
             return Ok(item);
+        }
+
+        // GET: api/PostApi/category/5
+        [HttpGet("category/{categoryId}")]
+        public async Task<IActionResult> GetPostsByCategory(int categoryId)
+        {
+            var items = await _context.Posts.Where(p => p.CategoryId == categoryId).OrderByDescending(p => p.CreatedDate).ToListAsync();
+            return Ok(items);
         }
     }
 }
