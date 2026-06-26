@@ -51,6 +51,12 @@ const HeroBanner = () => {
         );
     }
 
+    const getPlainText = (html) => {
+        if (!html) return '';
+        const doc = new DOMParser().parseFromString(html, 'text/html');
+        return doc.body.textContent || "";
+    };
+
     return (
         <div id="heroCarousel" className="carousel slide carousel-fade mb-5" data-bs-ride="carousel" data-bs-interval="4000">
             <div className="carousel-indicators">
@@ -64,19 +70,19 @@ const HeroBanner = () => {
                     const imgUrl = item.imageUrl ? (item.imageUrl.startsWith('http') ? item.imageUrl : `http://localhost:5173${item.imageUrl}`) : '/banner-giay-bong-da.jpg';
                     
                     return (
-                        <div key={item.id} className={`carousel-item ${index === 0 ? 'active' : ''}`} style={{minHeight: '80vh', background: `linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.8)), url('${imgUrl}') no-repeat center/cover`, backgroundAttachment: 'fixed'}}>
+                        <div key={item.id} className={`carousel-item ${index === 0 ? 'active' : ''}`} style={{minHeight: '80vh', background: `linear-gradient(rgba(0,0,0,0.1), rgba(0,0,0,0.4)), url('${imgUrl}') no-repeat center/cover`, backgroundAttachment: 'fixed'}}>
                             <div className="container d-flex align-items-center h-100" style={{minHeight: '80vh'}}>
                                 <div className="row w-100">
                                     <div className="col-lg-8">
-                                        <div className="badge bg-danger mb-3 px-3 py-2 fs-6">SỰ KIỆN NỔI BẬT</div>
-                                        <h1 className="fw-bolder mb-3 text-white brand-font text-uppercase" style={{fontSize: '4.5rem', lineHeight: '1.1', textShadow: '0 4px 20px rgba(0,0,0,0.5)'}}>
-                                            {item.title}
+                                        <div className="badge bg-danger mb-3 px-3 py-2 fs-6 shadow-sm">SỰ KIỆN NỔI BẬT</div>
+                                        <h1 className="fw-bolder mb-3 text-white brand-font text-uppercase" style={{fontSize: '4.5rem', lineHeight: '1.1', textShadow: '0 4px 15px rgba(0,0,0,0.8)'}}>
+                                            {getPlainText(item.title)}
                                         </h1>
-                                        <p className="lead mb-5 text-light" style={{fontSize: '1.2rem', maxWidth: '600px', lineHeight: '1.6', display: '-webkit-box', WebkitLineClamp: 3, WebkitBoxOrient: 'vertical', overflow: 'hidden'}}>
-                                            {item.content ? item.content.replace(/<[^>]+>/g, '') : ''}
+                                        <p className="lead mb-5 text-light" style={{fontSize: '1.2rem', maxWidth: '600px', lineHeight: '1.6', display: '-webkit-box', WebkitLineClamp: 3, WebkitBoxOrient: 'vertical', overflow: 'hidden', textShadow: '0 2px 10px rgba(0,0,0,0.8)'}}>
+                                            {getPlainText(item.content)}
                                         </p>
                                         <div className="d-flex align-items-center gap-4">
-                                            <Link to={`/post/${item.id}`} className="btn btn-accent px-5 py-3 fw-bold text-uppercase d-inline-flex align-items-center" style={{fontSize: '1.2rem', fontFamily: 'Oswald', letterSpacing: '1px'}}>
+                                            <Link to={`/post/${item.id}`} className="btn btn-accent px-5 py-3 fw-bold text-uppercase d-inline-flex align-items-center shadow-lg" style={{fontSize: '1.2rem', fontFamily: 'Oswald', letterSpacing: '1px'}}>
                                                 ĐỌC TIN TỨC <i className="fas fa-arrow-right ms-3"></i>
                                             </Link>
                                         </div>
