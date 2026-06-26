@@ -6,6 +6,7 @@ import { CartContext } from '../context/CartContext';
 const ProductsPage = () => {
     const [products, setProducts] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [bannerUrl, setBannerUrl] = useState('/banner-giay-bong-da.jpg');
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 8;
     const location = useLocation();
@@ -54,6 +55,17 @@ const ProductsPage = () => {
                 console.error(err);
                 setLoading(false);
             });
+            
+        // Lấy banner
+        axiosClient.get('/BannerApi')
+            .then(res => {
+                if(res.data && res.data.length > 0) {
+                    const imgUrl = res.data[0].imageUrl;
+                    const fullImg = imgUrl.startsWith('http') ? imgUrl : `http://localhost:5173${imgUrl}`;
+                    setBannerUrl(fullImg);
+                }
+            })
+            .catch(err => console.error(err));
     }, [categoryId]);
 
     // Pagination calculations
@@ -64,7 +76,7 @@ const ProductsPage = () => {
 
     return (
         <MainLayout>
-            <div className="bg-dark text-white py-5 mb-5 text-center position-relative" style={{background: 'linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url(/banner-giay-bong-da.jpg) center/cover'}}>
+            <div className="bg-dark text-white py-5 mb-5 text-center position-relative" style={{background: `linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url(${bannerUrl}) center/cover`}}>
                 <h1 className="brand-font display-4 fw-bold text-uppercase" style={{letterSpacing: '2px'}}>{categoryId ? "Sản phẩm theo danh mục" : "Tất cả sản phẩm"}</h1>
                 <p className="lead" style={{fontFamily: 'Inter', color: '#ccc'}}>Khám phá toàn bộ kho hàng siêu khủng của HAI SPORT</p>
             </div>

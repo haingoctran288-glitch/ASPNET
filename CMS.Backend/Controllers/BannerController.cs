@@ -5,17 +5,19 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using System.IO;
-using Microsoft.EntityFrameworkCore;
+using System;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace CMS.Backend.Controllers
 {
     [Authorize]
-    public class PostController : Controller
+    public class BannerController : Controller
     {
         private readonly ApplicationDbContext _context;
         private readonly IWebHostEnvironment _webHostEnvironment;
 
-        public PostController(ApplicationDbContext context, IWebHostEnvironment webHostEnvironment)
+        public BannerController(ApplicationDbContext context, IWebHostEnvironment webHostEnvironment)
         {
             _context = context;
             _webHostEnvironment = webHostEnvironment;
@@ -23,21 +25,19 @@ namespace CMS.Backend.Controllers
 
         public IActionResult Index()
         {
-            var list = _context.Posts.Include(x => x.Category).ToList();
+            var list = _context.Banners.ToList();
             return View(list);
         }
 
         public IActionResult Create()
         {
-            ViewData["CategoryId"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(_context.Categories, "Id", "Name");
             return View();
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(Post model, IFormFile? imageFile)
+        public async Task<IActionResult> Create(Banner model, IFormFile? imageFile)
         {
-            ModelState.Remove("Category");
             ModelState.Remove("ImageUrl");
             if (ModelState.IsValid)
             {
@@ -55,41 +55,29 @@ namespace CMS.Backend.Controllers
                 }
                 else
                 {
-                    model.ImageUrl = "https://via.placeholder.com/600x400"; // default placeholder
+                    model.ImageUrl = "https://via.placeholder.com/1200x400"; // default banner
                 }
                 
-                model.CreatedDate = DateTime.Now;
-                _context.Posts.Add(model);
+                _context.Banners.Add(model);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            
-            ViewData["CategoryId"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(_context.Categories, "Id", "Name", model.CategoryId);
             return View(model);
         }
 
-        
-        public IActionResult Details(int id)
-        {
-            var model = _context.Posts.Include(x => x.Category).FirstOrDefault(m => m.Id == id);
-            if (model == null) return NotFound();
-            return View(model);
-        }
         public IActionResult Edit(int id)
         {
-            var model = _context.Posts.Find(id);
+            var model = _context.Banners.Find(id);
             if (model == null) return NotFound();
-            ViewData["CategoryId"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(_context.Categories, "Id", "Name", model.CategoryId);
             return View(model);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, Post model, IFormFile? imageFile)
+        public async Task<IActionResult> Edit(int id, Banner model, IFormFile? imageFile)
         {
             if (id != model.Id) return NotFound();
 
-            ModelState.Remove("Category");
             ModelState.Remove("ImageUrl");
             if (ModelState.IsValid)
             {
@@ -106,12 +94,10 @@ namespace CMS.Backend.Controllers
                     model.ImageUrl = "/images/" + uniqueFileName;
                 }
 
-                model.CreatedDate = DateTime.Now;
-                _context.Posts.Update(model);
+                _context.Banners.Update(model);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CategoryId"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(_context.Categories, "Id", "Name", model.CategoryId);
             return View(model);
         }
 
@@ -119,19 +105,12 @@ namespace CMS.Backend.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult DeleteConfirmed(int id)
         {
-            var model = _context.Posts.Find(id);
+            var model = _context.Banners.Find(id);
             if (model == null) return NotFound();
             
-            try
-            {
-                _context.Posts.Remove(model);
-                _context.SaveChanges();
-            }
-            catch (DbUpdateException)
-            {
-                TempData["ErrorMessage"] = "Không thể xóa vì dữ liệu này đang được liên kết với dữ liệu khác.";
-                return RedirectToAction(nameof(Index));
-            }
+            _context.Banners.Remove(model);
+            _context.SaveChanges();
+            
             return RedirectToAction(nameof(Index));
         }
     }
