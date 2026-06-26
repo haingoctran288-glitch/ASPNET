@@ -18,9 +18,31 @@ namespace CMS.Backend.Controllers.Api
         // GET: api/ProductApi
         [HttpGet]
         [ProducesResponseType(typeof(IEnumerable<CMS.Data.Entities.Product>), StatusCodes.Status200OK)]
-        public async Task<IActionResult> GetProducts()
+        public async Task<IActionResult> GetProducts([FromQuery] string? search = null, [FromQuery] int? categoryId = null, [FromQuery] decimal? minPrice = null, [FromQuery] decimal? maxPrice = null)
         {
-            var items = await _context.Products.ToListAsync();
+            var query = _context.Products.AsQueryable();
+
+            if (!string.IsNullOrEmpty(search))
+            {
+                query = query.Where(p => p.Name.Contains(search) || p.Description.Contains(search));
+            }
+
+            if (categoryId.HasValue)
+            {
+                query = query.Where(p => p.CategoryProductId == categoryId.Value);
+            }
+
+            if (minPrice.HasValue)
+            {
+                query = query.Where(p => p.Price >= minPrice.Value);
+            }
+
+            if (maxPrice.HasValue)
+            {
+                query = query.Where(p => p.Price <= maxPrice.Value);
+            }
+
+            var items = await query.ToListAsync();
             return Ok(items);
         }
 

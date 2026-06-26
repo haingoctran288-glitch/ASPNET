@@ -107,9 +107,21 @@ namespace CMS.Backend.Controllers.Api
         // GET: api/OrderApi
         [HttpGet]
         [ProducesResponseType(typeof(IEnumerable<CMS.Data.Entities.Order>), StatusCodes.Status200OK)]
-        public async Task<IActionResult> GetOrders()
+        public async Task<IActionResult> GetOrders([FromQuery] int? customerId = null, [FromQuery] int? status = null)
         {
-            var items = await _context.Orders.ToListAsync();
+            var query = _context.Orders.AsQueryable();
+
+            if (customerId.HasValue)
+            {
+                query = query.Where(o => o.CustomerId == customerId.Value);
+            }
+
+            if (status.HasValue)
+            {
+                query = query.Where(o => o.Status == status.Value);
+            }
+
+            var items = await query.ToListAsync();
             return Ok(items);
         }
 

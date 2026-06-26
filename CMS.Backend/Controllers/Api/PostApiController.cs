@@ -18,9 +18,21 @@ namespace CMS.Backend.Controllers.Api
         // GET: api/PostApi
         [HttpGet]
         [ProducesResponseType(typeof(IEnumerable<CMS.Data.Entities.Post>), StatusCodes.Status200OK)]
-        public async Task<IActionResult> GetPosts()
+        public async Task<IActionResult> GetPosts([FromQuery] string? search = null, [FromQuery] int? categoryId = null)
         {
-            var items = await _context.Posts.ToListAsync();
+            var query = _context.Posts.AsQueryable();
+
+            if (!string.IsNullOrEmpty(search))
+            {
+                query = query.Where(p => p.Title.Contains(search) || p.Content.Contains(search));
+            }
+
+            if (categoryId.HasValue)
+            {
+                query = query.Where(p => p.CategoryId == categoryId.Value);
+            }
+
+            var items = await query.ToListAsync();
             return Ok(items);
         }
 
