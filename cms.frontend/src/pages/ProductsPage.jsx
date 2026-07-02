@@ -21,6 +21,10 @@ const ProductsPage = () => {
     // Parse query parameter
     const queryParams = new URLSearchParams(location.search);
     const categoryId = queryParams.get('category');
+    const search = queryParams.get('search');
+
+    const [minPrice, setMinPrice] = useState(queryParams.get('minPrice') || '');
+    const [maxPrice, setMaxPrice] = useState(queryParams.get('maxPrice') || '');
 
     const openBuyModal = (p) => {
         setSelectedProduct(p);
@@ -47,10 +51,18 @@ const ProductsPage = () => {
         let cartItemId = Date.now().toString();
         
         if(!existing) {
+            if (quantity > p.stockQuantity) {
+                alert("Số lượng sản phẩm trong kho không đủ!");
+                return;
+            }
             const newItem = { ...p, quantity: quantity, selectedSize: selectedSize, cartItemId };
             currentCart.push(newItem);
             localStorage.setItem('cart', JSON.stringify(currentCart));
         } else {
+            if (existing.quantity + quantity > p.stockQuantity) {
+                alert("Số lượng sản phẩm trong kho không đủ!");
+                return;
+            }
             cartItemId = existing.cartItemId;
             existing.quantity += quantity;
             localStorage.setItem('cart', JSON.stringify(currentCart));
@@ -69,7 +81,11 @@ const ProductsPage = () => {
 
     useEffect(() => {
         setLoading(true);
-        const url = categoryId ? `/ProductApi/category/${categoryId}` : '/ProductApi';
+        let url = '/ProductApi?';
+        if (categoryId) url += `categoryId=${categoryId}&`;
+        if (search) url += `search=${encodeURIComponent(search)}&`;
+        if (minPrice) url += `minPrice=${minPrice}&`;
+        if (maxPrice) url += `maxPrice=${maxPrice}&`;
         
         axiosClient.get(url)
             .then(res => {
@@ -87,12 +103,22 @@ const ProductsPage = () => {
             .then(res => {
                 if(res.data && res.data.length > 0) {
                     const imgUrl = res.data[0].imageUrl;
-                    const fullImg = imgUrl.startsWith('http') ? imgUrl : `http://localhost:5173${imgUrl}`;
+                    const fullImg = imgUrl.startsWith('http') ? imgUrl : `${process.env.REACT_APP_IMAGE_BASE_URL || "http://localhost:5173"}${imgUrl}`;
                     setBannerUrl(fullImg);
                 }
             })
             .catch(err => console.error(err));
-    }, [categoryId]);
+    }, [categoryId, search, location.search]);
+
+    const handleFilterPrice = (e) => {
+        e.preventDefault();
+        let query = new URLSearchParams(location.search);
+        if (minPrice) query.set('minPrice', minPrice);
+        else query.delete('minPrice');
+        if (maxPrice) query.set('maxPrice', maxPrice);
+        else query.delete('maxPrice');
+        navigate(`/products?${query.toString()}`);
+    };
 
     // Pagination calculations
     const totalPages = Math.ceil(products.length / itemsPerPage);
@@ -114,10 +140,28 @@ const ProductsPage = () => {
                     <div className="text-center py-5"><div className="spinner-border text-danger"></div></div>
                 ) : (
                     <>
+                        <div className="d-flex justify-content-between align-items-center mb-4 flex-wrap">
+                            <h4 className="mb-0 text-uppercase fw-bold brand-font">
+                                {search ? `Kết quả tìm kiếm: "${search}"` : "Tất cả sản phẩm"}
+                            </h4>
+                            <form onSubmit={handleFilterPrice} className="d-flex gap-2 align-items-center">
+                                <span className="fw-bold text-muted small">LỌC GIÁ:</span>
+                                <input type="number" className="form-control form-control-sm rounded-0" placeholder="Từ" value={minPrice} onChange={e => setMinPrice(e.target.value)} style={{width: '100px'}} />
+                                <span>-</span>
+                                <input type="number" className="form-control form-control-sm rounded-0" placeholder="Đến" value={maxPrice} onChange={e => setMaxPrice(e.target.value)} style={{width: '100px'}} />
+                                <button type="submit" className="btn btn-dark btn-sm rounded-0 fw-bold">LỌC</button>
+                            </form>
+                        </div>
+                        {currentProducts.length === 0 ? (
+                            <div className="text-center py-5">
+                                <img src="/no-results.png" alt="No results" style={{maxWidth: '200px', opacity: 0.5, marginBottom: '20px'}} />
+                                <h4 className="text-muted">Không tìm thấy sản phẩm nào phù hợp với tiêu chí của bạn</h4>
+                            </div>
+                        ) : (
                         <div className="row g-4 justify-content-center">
                             {currentProducts.map(p => {
                                 const imgUrl = p.imageUrl ? (p.imageUrl.startsWith('/') || p.imageUrl.startsWith('http') ? p.imageUrl : '/' + p.imageUrl) : "https://via.placeholder.com/400x300";
-                                const fullImg = imgUrl.startsWith('http') ? imgUrl : `http://localhost:5173${imgUrl}`;
+                                const fullImg = imgUrl.startsWith('http') ? imgUrl : `${process.env.REACT_APP_IMAGE_BASE_URL || "http://localhost:5173"}${imgUrl}`;
                                 return (
                                 <div className="col-sm-6 col-md-4 col-lg-3" key={p.id}>
                                     <div className="card h-100 border-0 rounded-0 product-card">
@@ -152,6 +196,7 @@ const ProductsPage = () => {
                                 </div>
                             )})}
                         </div>
+                        )}
 
                         {totalPages > 1 && (
                             <nav className="d-flex justify-content-center mt-5">
@@ -195,7 +240,7 @@ const ProductsPage = () => {
                         <div className="modal-body p-4">
                             <div className="d-flex mb-4">
                                 <img 
-                                    src={selectedProduct?.imageUrl ? (selectedProduct.imageUrl.startsWith('http') ? selectedProduct.imageUrl : `http://localhost:5173${selectedProduct.imageUrl}`) : "https://via.placeholder.com/150"} 
+                                    src={selectedProduct?.imageUrl ? (selectedProduct.imageUrl.startsWith('http') ? selectedProduct.imageUrl : `${process.env.REACT_APP_IMAGE_BASE_URL || "http://localhost:5173"}${selectedProduct.imageUrl}`) : "https://via.placeholder.com/150"} 
                                     alt={selectedProduct?.name} 
                                     className="rounded" 
                                     style={{width: '100px', height: '100px', objectFit: 'contain', border: '1px solid #eee'}} 

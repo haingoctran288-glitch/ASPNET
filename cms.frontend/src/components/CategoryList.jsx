@@ -14,26 +14,41 @@ const CategoryList = () => {
     if (categories.length === 0) return null;
 
     return (
-        <div className="py-4 my-4 border-bottom border-top">
+        <div className="py-5 bg-light my-4">
             <div className="container">
-                <div className="d-flex flex-wrap justify-content-center align-items-center gap-3">
-                    {categories.map(c => (
-                        <Link 
-                            key={c.id} 
-                            to={`/products?category=${c.id}`} 
-                            className="btn btn-outline-dark rounded-0 px-4 py-2 fw-bold text-uppercase d-flex align-items-center gap-2" 
-                            style={{
-                                fontFamily: 'Oswald', 
-                                letterSpacing: '1px',
-                                transition: 'all 0.3s ease',
-                                borderWidth: '1px',
-                                fontSize: '0.9rem'
-                            }}>
-                            <i className="fas fa-shoe-prints small"></i> {c.name}
-                        </Link>
+                <div className="text-center mb-4">
+                    <h2 className="brand-font fs-1 m-0 text-uppercase">Danh mục sản phẩm</h2>
+                </div>
+                <div className="row g-4 justify-content-center">
+                    {categories.map((c, index) => (
+                        <div key={c.id} className="col-6 col-md-3 col-lg-2">
+                            <Link 
+                                to={`/products?category=${c.id}`} 
+                                className="text-decoration-none d-block category-block"
+                            >
+                                <div className="card border-0 rounded-0 shadow-sm text-center bg-white overflow-hidden category-card">
+                                    <div className="img-wrapper d-flex align-items-center justify-content-center bg-light" style={{height: '150px', padding: '15px'}}>
+                                        <img 
+                                            src={`https://ui-avatars.com/api/?name=${encodeURIComponent(c.name)}&background=random&color=fff&size=150`}
+                                            alt={c.name} 
+                                            className="img-fluid"
+                                            style={{transition: 'transform 0.3s ease', maxWidth: '80%'}}
+                                        />
+                                    </div>
+                                    <div className="card-body p-3">
+                                        <h6 className="card-title fw-bold text-dark text-uppercase m-0" style={{fontFamily: 'Oswald', letterSpacing: '0.5px'}}>{c.name}</h6>
+                                    </div>
+                                </div>
+                            </Link>
+                        </div>
                     ))}
                 </div>
             </div>
+            <style>{`
+                .category-card { transition: all 0.3s ease; }
+                .category-block:hover .category-card { transform: translateY(-10px); box-shadow: 0 10px 20px rgba(0,0,0,0.1) !important; border-bottom: 3px solid #dc3545 !important; }
+                .category-block:hover img { transform: scale(1.1); }
+            `}</style>
         </div>
     );
 };

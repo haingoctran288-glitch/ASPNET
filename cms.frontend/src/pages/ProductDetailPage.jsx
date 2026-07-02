@@ -23,11 +23,18 @@ const ProductDetailPage = () => {
     if (!product) return <MainLayout><div className="text-center py-5"><h3>Không tìm thấy sản phẩm!</h3></div></MainLayout>;
 
     const imgUrl = product.imageUrl ? (product.imageUrl.startsWith('/') || product.imageUrl.startsWith('http') ? product.imageUrl : '/' + product.imageUrl) : "https://via.placeholder.com/600x400";
-    const fullImg = imgUrl.startsWith('http') ? imgUrl : `http://localhost:5173${imgUrl}`;
+    const fullImg = imgUrl.startsWith('http') ? imgUrl : `${process.env.REACT_APP_IMAGE_BASE_URL || "http://localhost:5173"}${imgUrl}`;
 
     const handleAddToCart = () => {
         if (product.sizes && !selectedSize) {
             alert('Vui lòng chọn size giày!');
+            return;
+        }
+        let currentCart = JSON.parse(localStorage.getItem('cart')) || [];
+        const existing = currentCart.find(i => i.id === product.id && i.selectedSize === selectedSize);
+        let totalQty = existing ? existing.quantity + quantity : quantity;
+        if (totalQty > product.stockQuantity) {
+            alert("Số lượng sản phẩm trong kho không đủ!");
             return;
         }
         addToCart({ ...product, quantity, selectedSize });
@@ -43,10 +50,18 @@ const ProductDetailPage = () => {
         const existing = currentCart.find(i => i.id === product.id && i.selectedSize === selectedSize);
         let cartItemId = Date.now().toString();
         if(!existing) {
+            if (quantity > product.stockQuantity) {
+                alert("Số lượng sản phẩm trong kho không đủ!");
+                return;
+            }
             const newItem = { ...product, quantity: quantity, selectedSize, cartItemId };
             currentCart.push(newItem);
             localStorage.setItem('cart', JSON.stringify(currentCart));
         } else {
+            if (existing.quantity + quantity > product.stockQuantity) {
+                alert("Số lượng sản phẩm trong kho không đủ!");
+                return;
+            }
             cartItemId = existing.cartItemId;
             existing.quantity += quantity;
             localStorage.setItem('cart', JSON.stringify(currentCart));

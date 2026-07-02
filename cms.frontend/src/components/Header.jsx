@@ -11,7 +11,15 @@ const Header = () => {
     // Auth state
     const rawCustomer = JSON.parse(localStorage.getItem('customer'));
     const customer = rawCustomer?.customer ? rawCustomer.customer : rawCustomer;
-    const { cart } = useContext(CartContext);
+    const { totalItems } = useContext(CartContext);
+    const [searchTerm, setSearchTerm] = useState('');
+
+    const handleSearch = (e) => {
+        e.preventDefault();
+        if (searchTerm.trim()) {
+            navigate(`/products?search=${encodeURIComponent(searchTerm)}`);
+        }
+    };
 
     useEffect(() => {
         axiosClient.get('/CategoryProductApi').then(res => setProdCats(res.data)).catch(console.error);
@@ -73,9 +81,17 @@ const Header = () => {
                 </div>
 
                 <div className="d-flex gap-4 align-items-center mt-3 mt-lg-0">
+                    <form onSubmit={handleSearch} className="d-flex position-relative">
+                        <input type="text" className="form-control rounded-pill pe-4" placeholder="Tìm kiếm..." 
+                               value={searchTerm} onChange={e => setSearchTerm(e.target.value)} style={{fontSize: '0.9rem', width: '200px'}} />
+                        <button type="submit" className="btn position-absolute end-0 top-50 translate-middle-y border-0 text-muted">
+                            <i className="fas fa-search"></i>
+                        </button>
+                    </form>
+
                     <Link to="/cart" className="text-dark text-decoration-none position-relative">
                         <i className="fas fa-shopping-cart fs-5"></i>
-                        <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-accent" style={{fontSize: '0.65rem', border: '1px solid #fff'}}>{cart.length}</span>
+                        <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-accent" style={{fontSize: '0.65rem', border: '1px solid #fff'}}>{totalItems}</span>
                     </Link>
                     
                     {customer ? (

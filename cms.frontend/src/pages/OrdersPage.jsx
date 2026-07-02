@@ -8,7 +8,7 @@ const OrderCard = ({ order }) => {
     const firstItem = order.details[0];
     const moreCount = order.details.length - 1;
     const imgUrl = firstItem?.imageUrl ? (firstItem.imageUrl.startsWith('/') || firstItem.imageUrl.startsWith('http') ? firstItem.imageUrl : '/' + firstItem.imageUrl) : "https://via.placeholder.com/100";
-    const fullImg = imgUrl.startsWith('http') ? imgUrl : `http://localhost:5173${imgUrl}`;
+    const fullImg = imgUrl.startsWith('http') ? imgUrl : `${process.env.REACT_APP_IMAGE_BASE_URL || "http://localhost:5173"}${imgUrl}`;
 
     const getStatusBadge = (status) => {
         if(status === 0) return <span className="badge bg-warning text-dark px-3 py-2 rounded-pill shadow-sm"><i className="fas fa-hourglass-half me-1"></i>Chờ duyệt</span>;
@@ -49,7 +49,7 @@ const OrderCard = ({ order }) => {
                             <div className="d-flex flex-column gap-3">
                                 {order.details.map((d, i) => {
                                     const dImgUrl = d.imageUrl ? (d.imageUrl.startsWith('/') || d.imageUrl.startsWith('http') ? d.imageUrl : '/' + d.imageUrl) : "https://via.placeholder.com/100";
-                                    const dFullImg = dImgUrl.startsWith('http') ? dImgUrl : `http://localhost:5173${dImgUrl}`;
+                                    const dFullImg = dImgUrl.startsWith('http') ? dImgUrl : `${process.env.REACT_APP_IMAGE_BASE_URL || "http://localhost:5173"}${dImgUrl}`;
                                     return (
                                     <div key={i} className="d-flex align-items-center">
                                         <img src={dFullImg} alt={d.name} className="rounded-3 border" style={{width: '60px', height: '60px', objectFit: 'cover'}} />

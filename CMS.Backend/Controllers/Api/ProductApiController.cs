@@ -51,7 +51,7 @@ namespace CMS.Backend.Controllers.Api
         [ProducesResponseType(typeof(IEnumerable<CMS.Data.Entities.Product>), StatusCodes.Status200OK)]
         public async Task<IActionResult> GetNewestProducts()
         {
-            var items = await _context.Products.Where(p => p.ProductTag == "Mới").ToListAsync();
+            var items = await _context.Products.Where(p => p.ProductTag == "Mới").Take(3).ToListAsync();
             // Fallback nếu chưa gắn tag nào để tránh trang bị trống
             if (!items.Any())
             {
@@ -65,7 +65,7 @@ namespace CMS.Backend.Controllers.Api
         [ProducesResponseType(typeof(IEnumerable<CMS.Data.Entities.Product>), StatusCodes.Status200OK)]
         public async Task<IActionResult> GetHotProducts()
         {
-            var items = await _context.Products.Where(p => p.ProductTag == "HOT").ToListAsync();
+            var items = await _context.Products.Where(p => p.ProductTag == "HOT").Take(3).ToListAsync();
             // Fallback nếu chưa gắn tag nào để tránh trang bị trống
             if (!items.Any())
             {

@@ -87,7 +87,7 @@ const ProductList = ({ title, endpoint }) => {
             <div className="row g-4 justify-content-center">
                 {products.map(p => {
                     const imgUrl = p.imageUrl ? (p.imageUrl.startsWith('/') || p.imageUrl.startsWith('http') ? p.imageUrl : '/' + p.imageUrl) : "https://via.placeholder.com/400x300";
-                    const fullImg = imgUrl.startsWith('http') ? imgUrl : `http://localhost:5173${imgUrl}`;
+                    const fullImg = imgUrl.startsWith('http') ? imgUrl : `${process.env.REACT_APP_IMAGE_BASE_URL || "http://localhost:5173"}${imgUrl}`;
                     return (
                     <div className="col-sm-6 col-md-4 col-lg-3" key={p.id}>
                         <div className="card h-100 border-0 rounded-0 product-card">
@@ -147,7 +147,7 @@ const ProductList = ({ title, endpoint }) => {
                         <div className="modal-body p-4">
                             <div className="d-flex mb-4">
                                 <img 
-                                    src={selectedProduct?.imageUrl ? (selectedProduct.imageUrl.startsWith('http') ? selectedProduct.imageUrl : `http://localhost:5173${selectedProduct.imageUrl}`) : "https://via.placeholder.com/150"} 
+                                    src={selectedProduct?.imageUrl ? (selectedProduct.imageUrl.startsWith('http') ? selectedProduct.imageUrl : `${process.env.REACT_APP_IMAGE_BASE_URL || "http://localhost:5173"}${selectedProduct.imageUrl}`) : "https://via.placeholder.com/150"} 
                                     alt={selectedProduct?.name} 
                                     className="rounded" 
                                     style={{width: '100px', height: '100px', objectFit: 'contain', border: '1px solid #eee'}} 

@@ -68,7 +68,7 @@ const HeroBanner = () => {
             
             <div className="carousel-inner">
                 {slides.map((item, index) => {
-                    const imgUrl = item.imageUrl ? (item.imageUrl.startsWith('http') ? item.imageUrl : `http://localhost:5173${item.imageUrl}`) : '/banner-giay-bong-da.jpg';
+                    const imgUrl = item.imageUrl ? (item.imageUrl.startsWith('http') ? item.imageUrl : `${process.env.REACT_APP_IMAGE_BASE_URL || "http://localhost:5173"}${item.imageUrl}`) : '/banner-giay-bong-da.jpg';
                     
                     return (
                         <div key={item.id} className={`carousel-item ${index === 0 ? 'active' : ''}`} style={{minHeight: '80vh', background: `linear-gradient(rgba(0,0,0,0.1), rgba(0,0,0,0.4)), url('${imgUrl}') no-repeat center/cover`, backgroundAttachment: 'fixed'}}>

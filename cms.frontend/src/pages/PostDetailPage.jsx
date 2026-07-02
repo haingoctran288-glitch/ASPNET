@@ -19,7 +19,8 @@ const PostDetailPage = () => {
     if (!post) return <MainLayout><div className="text-center py-5"><h3>Không tìm thấy bài viết!</h3></div></MainLayout>;
 
     const imgUrl = post.imageUrl ? (post.imageUrl.startsWith('/') || post.imageUrl.startsWith('http') ? post.imageUrl : '/' + post.imageUrl) : "https://via.placeholder.com/1200x600";
-    const fullImg = imgUrl.startsWith('http') ? imgUrl : `http://localhost:5173${imgUrl}`;
+    const IMAGE_BASE_URL = process.env.REACT_APP_IMAGE_BASE_URL || 'http://localhost:5173';
+    const fullImg = imgUrl.startsWith('http') ? imgUrl : `${IMAGE_BASE_URL}${imgUrl}`.replace(/([^:]\/)\/+/g, "$1");
 
     return (
         <MainLayout>

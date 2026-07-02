@@ -16,7 +16,7 @@ const PostsPage = () => {
             .then(res => {
                 if(res.data && res.data.length > 0) {
                     const imgUrl = res.data[0].imageUrl;
-                    const fullImg = imgUrl.startsWith('http') ? imgUrl : `http://localhost:5173${imgUrl}`;
+                    const fullImg = imgUrl.startsWith('http') ? imgUrl : `${process.env.REACT_APP_IMAGE_BASE_URL || "http://localhost:5173"}${imgUrl}`;
                     setBannerUrl(fullImg);
                 }
             })

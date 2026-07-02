@@ -107,9 +107,9 @@ namespace CMS.Backend.Controllers.Api
             }
 
             var customer = await _context.Customers
-                .FirstOrDefaultAsync(c => c.Email == req.Email && c.Password == req.Password);
+                .FirstOrDefaultAsync(c => c.Email == req.Email);
 
-            if (customer == null)
+            if (customer == null || !BCrypt.Net.BCrypt.Verify(req.Password, customer.Password))
             {
                 return Unauthorized(new { message = "Email hoặc mật khẩu không chính xác." });
             }
@@ -155,7 +155,7 @@ namespace CMS.Backend.Controllers.Api
                 Email = req.Email,
                 Phone = req.Phone,
                 Address = req.Address,
-                Password = req.Password // Lưu ý: Thực tế nên băm mật khẩu (Hash), ở đây làm đơn giản theo yêu cầu
+                Password = BCrypt.Net.BCrypt.HashPassword(req.Password)
             };
 
             _context.Customers.Add(customer);
@@ -254,7 +254,7 @@ namespace CMS.Backend.Controllers.Api
             var customer = await _context.Customers.FirstOrDefaultAsync(c => c.Email == req.Email);
             if (customer == null) return NotFound(new { message = "Không tìm thấy khách hàng." });
 
-            customer.Password = req.NewPassword;
+            customer.Password = BCrypt.Net.BCrypt.HashPassword(req.NewPassword);
             _context.Customers.Update(customer);
             await _context.SaveChangesAsync();
 

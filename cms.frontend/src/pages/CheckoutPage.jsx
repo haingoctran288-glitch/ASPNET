@@ -110,7 +110,7 @@ const CheckoutPage = () => {
                                 <div className="d-flex flex-column gap-3 mb-4">
                                     {checkoutItems.map(item => {
                                         const imgUrl = item.imageUrl ? (item.imageUrl.startsWith('/') || item.imageUrl.startsWith('http') ? item.imageUrl : '/' + item.imageUrl) : "https://via.placeholder.com/150";
-                                        const fullImg = imgUrl.startsWith('http') ? imgUrl : `http://localhost:5173${imgUrl}`;
+                                        const fullImg = imgUrl.startsWith('http') ? imgUrl : `${process.env.REACT_APP_IMAGE_BASE_URL || "http://localhost:5173"}${imgUrl}`;
                                         return (
                                         <div key={item.cartItemId} className="d-flex align-items-center">
                                             <div className="position-relative">
