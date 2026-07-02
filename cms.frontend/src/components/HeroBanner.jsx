@@ -19,11 +19,12 @@ const HeroBanner = () => {
         if (slides.length > 0 && window.bootstrap) {
             const carouselElement = document.getElementById('heroCarousel');
             if (carouselElement) {
-                // Khởi tạo và ép carousel tự động chạy (4000ms)
-                new window.bootstrap.Carousel(carouselElement, {
-                    interval: 4000,
+                // Khởi tạo và ép carousel tự động chạy (5000ms)
+                const carousel = new window.bootstrap.Carousel(carouselElement, {
+                    interval: 5000,
                     ride: 'carousel'
                 });
+                carousel.cycle();
             }
         }
     }, [slides]);
@@ -58,7 +59,7 @@ const HeroBanner = () => {
     };
 
     return (
-        <div id="heroCarousel" className="carousel slide carousel-fade mb-5" data-bs-ride="carousel" data-bs-interval="4000">
+        <div id="heroCarousel" className="carousel slide carousel-fade mb-5" data-bs-ride="carousel" data-bs-interval="5000">
             <div className="carousel-indicators">
                 {slides.map((_, index) => (
                     <button key={index} type="button" data-bs-target="#heroCarousel" data-bs-slide-to={index} className={index === 0 ? "active" : ""} aria-current={index === 0 ? "true" : "false"} aria-label={`Slide ${index + 1}`}></button>
