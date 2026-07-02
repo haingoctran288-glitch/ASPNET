@@ -3,23 +3,23 @@
 }
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
+
 
 <div class="welcome-section">
     <div class="container py-5">
         <div class="row mb-5 justify-content-center">
             <div class="col-lg-8 text-center hero-content">
                 <div class="avatar-wrapper mb-4">
-                    <img src="https://ui-avatars.com/api/?name=Ngoc+Hai&background=4e73df&color=fff&size=128"
-                         class="rounded-circle shadow-lg profile-img" alt="Avatar">
+                    <img src="https://ui-avatars.com/api/?name=@(User.Identity.IsAuthenticated ? User.Identity.Name : "Ngoc+Hai")&background=dc3545&color=fff&size=128&rounded=false"
+                         class="rounded-0 shadow-lg profile-img" alt="Avatar">
                 </div>
-                <h1 class="display-4 fw-bold mb-3">Chào mừng trở lại, <span class="text-gradient">Ngọc Hải</span></h1>
+                <h1 class="display-4 fw-bold mb-3 text-uppercase brand-font">Chào mừng trở lại, <span class="text-gradient">@(User.Identity.IsAuthenticated ? User.Claims.FirstOrDefault(c => c.Type == "FullName")?.Value ?? User.Identity.Name : "Khách")</span></h1>
                 <p class="lead text-secondary mb-4">Hệ thống quản trị nội dung CMS đa nền tảng. Bạn muốn quản lý gì hôm nay?</p>
                 <div class="d-flex justify-content-center gap-3">
-                    <a href="https://learn.microsoft.com/aspnet/core" target="_blank" class="btn btn-outline-primary rounded-pill px-4">
-                        <i class="fab fa-microsoft me-2"></i>Tài liệu .NET
+                    <a href="#" class="btn btn-outline-dark rounded-0 px-4 brand-font text-uppercase fw-bold">
+                        <i class="fas fa-chart-line me-2"></i>Thống kê
                     </a>
-                    <button class="btn btn-primary shadow rounded-pill px-4">
+                    <button class="btn btn-danger shadow rounded-0 px-4 brand-font text-uppercase fw-bold">
                         <i class="fas fa-rocket me-2"></i>Bắt đầu ngay
                     </button>
                 </div>
@@ -177,20 +177,20 @@
 
 <style>
     :root {
-        --primary: #4e73df;
-        --success: #1cc88a;
-        --warning: #f6c23e;
-        --dark-blue: #2c3e50;
+        --primary: #dc3545;
+        --success: #198754;
+        --warning: #ffc107;
+        --dark-blue: #111111;
     }
 
     body {
-        background-color: #f8f9fc;
-        font-family: 'Plus Jakarta Sans', sans-serif;
+        background-color: #f8f9fa;
+        font-family: 'Inter', sans-serif;
     }
 
     /* Hiệu ứng chữ Gradient */
     .text-gradient {
-        background: linear-gradient(90deg, var(--primary), #9c27b0);
+        background: linear-gradient(90deg, #dc3545, #111111);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
     }
@@ -209,8 +209,8 @@
     .card-shortcut {
         background: white;
         padding: 2rem;
-        border-radius: 20px;
-        border: 1px solid #edf2f9;
+        border-radius: 0px;
+        border: 1px solid #dee2e6;
         transition: all 0.3s ease;
         height: 100%;
         position: relative;
@@ -225,7 +225,7 @@
     .icon-box {
         width: 60px;
         height: 60px;
-        border-radius: 15px;
+        border-radius: 0px;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -234,37 +234,42 @@
     }
 
     .bg-soft-primary {
-        background-color: #eef2ff;
+        background-color: #f8d7da;
     }
 
     .bg-soft-success {
-        background-color: #e6fcf5;
+        background-color: #d1e7dd;
     }
 
     .bg-soft-warning {
-        background-color: #fff9db;
+        background-color: #fff3cd;
     }
 
     .bg-soft-info {
-        background-color: #e7f5ff;
+        background-color: #cff4fc;
     }
 
     .bg-soft-danger {
-        background-color: #fff5f5;
+        background-color: #f8d7da;
     }
 
     .bg-soft-secondary {
-        background-color: #f1f3f5;
+        background-color: #e2e3e5;
     }
 
     .card-shortcut h4 {
+        font-family: 'Oswald', sans-serif;
         font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 1px;
         color: var(--dark-blue);
     }
 
     .card-shortcut a {
+        font-family: 'Oswald', sans-serif;
         font-weight: 600;
-        font-size: 0.9rem;
+        font-size: 1rem;
+        text-transform: uppercase;
         color: var(--primary);
         display: inline-block;
         margin-top: 1rem;

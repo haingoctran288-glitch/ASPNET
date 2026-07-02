@@ -6,7 +6,7 @@
     <title>@ViewData["Title"] - CMS Admin</title>
     
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
     <!-- FontAwesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -22,8 +22,8 @@
     <div id="wrapper">
         <!-- Sidebar -->
         <nav id="sidebar">
-            <div class="sidebar-brand">
-                <span><i class="fas fa-layer-group me-2"></i>HAI CMS</span>
+            <div class="sidebar-brand brand-font text-uppercase" style="letter-spacing: 2px;">
+                <span class="text-white"><i class="fas fa-futbol me-2 text-danger"></i>HAI SPORT</span>
             </div>
             <ul class="sidebar-nav">
                 <li class="nav-item">
@@ -88,7 +88,7 @@
                                 <span class="fw-semibold d-block">@(User.Identity.IsAuthenticated ? User.Claims.FirstOrDefault(c => c.Type == "FullName")?.Value ?? User.Identity.Name : "Khách")</span>
                                 <small class="badge bg-primary text-white" style="font-size: 0.7rem; padding: 2px 6px;">@(User.Identity.IsAuthenticated ? User.Claims.FirstOrDefault(c => c.Type == System.Security.Claims.ClaimTypes.Role)?.Value : "")</small>
                             </div>
-                            <img src="https://ui-avatars.com/api/?name=@(User.Identity.Name)&background=4e73df&color=fff&rounded=true" width="35" height="35" alt="Avatar">
+                            <img src="https://ui-avatars.com/api/?name=@(User.Identity.Name)&background=dc3545&color=fff&rounded=false" width="35" height="35" alt="Avatar" class="rounded-0">
                         </a>
                         <ul class="dropdown-menu dropdown-menu-end shadow-custom border-0 mt-2">
                             <li><a class="dropdown-item" href="#"><i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i> Profile</a></li>

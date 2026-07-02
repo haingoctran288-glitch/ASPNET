@@ -1,20 +1,24 @@
 /* Global Variables */
 :root {
-    --primary: #4e73df;
-    --primary-dark: #224abe;
-    --sidebar-bg: #1e1e2f;
-    --sidebar-hover: rgba(255, 255, 255, 0.1);
-    --bg-light: #f4f6f9;
-    --text-main: #333;
-    --text-muted: #858796;
-    --glass-bg: rgba(255, 255, 255, 0.9);
+    --primary: #dc3545;
+    --primary-dark: #b02a37;
+    --sidebar-bg: #111111;
+    --sidebar-hover: #dc3545;
+    --bg-light: #f8f9fa;
+    --text-main: #212529;
+    --text-muted: #6c757d;
+    --glass-bg: rgba(255, 255, 255, 0.95);
 }
 
 body {
     background-color: var(--bg-light);
-    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-family: 'Inter', sans-serif;
     color: var(--text-main);
     overflow-x: hidden;
+}
+
+h1, h2, h3, h4, h5, h6, .brand-font {
+    font-family: 'Oswald', sans-serif;
 }
 
 /* Layout Wrapper */
@@ -52,7 +56,7 @@ body {
 }
 
 .sidebar-brand span {
-    background: linear-gradient(90deg, #fff, #a3b8ff);
+    background: linear-gradient(90deg, #fff, #dc3545);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
@@ -135,7 +139,80 @@ body {
 }
 
 .rounded-custom {
-    border-radius: 15px !important;
+    border-radius: 0px !important;
+}
+
+/* Global Component Overrides for Sporty Brand */
+.btn {
+    border-radius: 0px;
+    font-family: 'Oswald', sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-weight: 500;
+}
+
+.card {
+    border-radius: 0px;
+    border: none;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+}
+
+.card-header {
+    background-color: #111;
+    color: #fff;
+    border-radius: 0px !important;
+    font-family: 'Oswald', sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.form-control, .form-select {
+    border-radius: 0px;
+}
+
+.form-control:focus, .form-select:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 0.25rem rgba(220, 53, 69, 0.25);
+}
+
+.table {
+    vertical-align: middle;
+}
+
+.table thead th {
+    font-family: 'Oswald', sans-serif;
+    text-transform: uppercase;
+    background-color: #f8f9fa;
+    color: #111;
+    letter-spacing: 0.5px;
+}
+
+.badge {
+    border-radius: 0px;
+    font-family: 'Oswald', sans-serif;
+    letter-spacing: 0.5px;
+}
+
+.btn-primary {
+    background-color: var(--primary);
+    border-color: var(--primary);
+    color: #fff;
+}
+
+.btn-primary:hover {
+    background-color: var(--primary-dark);
+    border-color: var(--primary-dark);
+}
+
+.btn-outline-primary {
+    color: var(--primary);
+    border-color: var(--primary);
+}
+
+.btn-outline-primary:hover {
+    background-color: var(--primary);
+    border-color: var(--primary);
+    color: #fff;
 }
 
 @media (max-width: 768px) {
