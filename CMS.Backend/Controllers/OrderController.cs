@@ -73,8 +73,25 @@ namespace CMS.Backend.Controllers
             ModelState.Remove("OrderDetails");
             if (ModelState.IsValid)
             {
+                var oldOrder = _context.Orders.AsNoTracking()
+                    .Include(o => o.OrderDetails)
+                    .Include(o => o.Customer)
+                    .FirstOrDefault(o => o.Id == id);
+                
                 _context.Orders.Update(model);
                 _context.SaveChanges();
+
+                if (oldOrder != null && oldOrder.Status != model.Status && 
+                    (model.Status == "Đã xác nhận" || model.Status == "Đang giao hàng" || model.Status == "Đã giao" || model.Status == "Đã hủy"))
+                {
+                    var customer = oldOrder.Customer ?? _context.Customers.Find(model.CustomerId);
+                    if (customer != null && !string.IsNullOrEmpty(customer.Email))
+                    {
+                        decimal total = oldOrder.OrderDetails?.Sum(x => x.Quantity * x.UnitPrice) ?? 0;
+                        _ = CMS.Backend.Services.EmailService.SendOrderStatusUpdateEmail(customer.Email, customer.FullName, model.Id, total, model.Status);
+                    }
+                }
+
                 return RedirectToAction(nameof(Index));
             }
             ViewData["CustomerId"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(_context.Customers, "Id", "FullName", model.CustomerId);

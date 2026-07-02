@@ -39,6 +39,7 @@ namespace CMS.Backend.Controllers
             {
                 _context.OrderDetails.Add(model);
                 _context.SaveChanges();
+                _ = NotifyCustomerAboutOrderModification(model.OrderId);
                 return RedirectToAction("Details", "Order", new { id = model.OrderId });
             }
             ViewData["OrderId"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(_context.Orders, "Id", "Id", model.OrderId);
@@ -74,6 +75,7 @@ namespace CMS.Backend.Controllers
             {
                 _context.OrderDetails.Update(model);
                 _context.SaveChanges();
+                _ = NotifyCustomerAboutOrderModification(model.OrderId);
                 return RedirectToAction("Details", "Order", new { id = model.OrderId });
             }
             ViewData["OrderId"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(_context.Orders, "Id", "Id", model.OrderId);
@@ -93,6 +95,7 @@ namespace CMS.Backend.Controllers
             {
                 _context.OrderDetails.Remove(model);
                 _context.SaveChanges();
+                _ = NotifyCustomerAboutOrderModification(orderId);
             }
             catch (DbUpdateException)
             {
@@ -100,6 +103,20 @@ namespace CMS.Backend.Controllers
                 return RedirectToAction("Details", "Order", new { id = orderId });
             }
             return RedirectToAction("Details", "Order", new { id = orderId });
+        }
+
+        private async Task NotifyCustomerAboutOrderModification(int orderId)
+        {
+            var order = await _context.Orders
+                .Include(o => o.Customer)
+                .Include(o => o.OrderDetails)
+                .FirstOrDefaultAsync(o => o.Id == orderId);
+
+            if (order != null && order.Customer != null && !string.IsNullOrEmpty(order.Customer.Email))
+            {
+                decimal newTotal = order.OrderDetails?.Sum(x => x.Quantity * x.UnitPrice) ?? 0;
+                await CMS.Backend.Services.EmailService.SendOrderModifiedEmail(order.Customer.Email, order.Customer.FullName, orderId, newTotal);
+            }
         }
     }
 }

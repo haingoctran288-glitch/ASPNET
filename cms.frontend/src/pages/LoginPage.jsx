@@ -44,6 +44,9 @@ const LoginPage = () => {
                                             </button>
                                         </div>
                                     </div>
+                                    <div className="text-end mb-4">
+                                        <Link to="/forgot-password" className="text-decoration-none text-muted" style={{fontSize: '14px'}}>Quên mật khẩu?</Link>
+                                    </div>
                                     <button type="submit" className="btn-premium w-100 btn-lg mb-4">
                                         ĐĂNG NHẬP <i className="fas fa-arrow-right ms-2"></i>
                                     </button>
