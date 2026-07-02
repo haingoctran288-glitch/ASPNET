@@ -17,7 +17,7 @@
             <h2 class="fw-bold text-uppercase mb-2" style="letter-spacing: 2px;">Khám phá bài viết</h2>
             <div class="mx-auto bg-primary mb-2" style="height: 3px; width: 60px;"></div>
             <p class="text-muted mb-0">Tổng cộng có @(Model?.Count() ?? 0) bài viết</p>
-            <a asp-action="Create" class="btn btn-primary position-absolute end-0 top-50 translate-middle-y px-4 rounded-pill">
+            <a asp-action="Create" class="btn btn-primary position-absolute end-0 top-50 translate-middle-y px-4 rounded-0">
                 <i class="bi bi-plus-circle me-2"></i>Thêm bài viết
             </a>
         </div>
@@ -47,7 +47,7 @@
                             </div>
                             @if(item.IsBanner) {
                                 <div class="position-absolute" style="top: 15px; right: 15px;">
-                                    <span class="badge bg-warning text-dark px-3 py-2 rounded-pill shadow-sm fw-bold"><i class="fas fa-star text-danger me-1"></i> BANNER</span>
+                                    <span class="badge bg-warning text-dark px-3 py-2 rounded-0 shadow-sm fw-bold"><i class="fas fa-star text-danger me-1"></i> BANNER</span>
                                 </div>
                             }
                         </div>
@@ -79,10 +79,10 @@
                         <div class="card-footer bg-transparent border-0 p-4 pt-0">
 
                             <div class="d-flex gap-2">
-                                <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-info w-50 rounded-pill text-white"><i class="bi bi-info-circle me-1"></i>Xem</a>
-                                <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-warning w-50 rounded-pill py-2 fw-semibold text-white"><i class="bi bi-pencil me-1"></i>Sửa</a>
+                                <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-info w-50 rounded-0 text-white"><i class="bi bi-info-circle me-1"></i>Xem</a>
+                                <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-warning w-50 rounded-0 py-2 fw-semibold text-white"><i class="bi bi-pencil me-1"></i>Sửa</a>
                                 <form asp-action="Delete" asp-route-id="@item.Id" method="post" class="w-50 m-0 p-0" onsubmit="return confirm('Bạn có chắc muốn xóa?');">
-                                    <button type="submit" class="btn btn-danger w-100 rounded-pill py-2 fw-semibold"><i class="bi bi-trash me-1"></i>Xóa</button>
+                                    <button type="submit" class="btn btn-danger w-100 rounded-0 py-2 fw-semibold"><i class="bi bi-trash me-1"></i>Xóa</button>
                                 </form>
                             </div>
 
