@@ -24,7 +24,7 @@ const PostList = ({ title = "Tin tức", endpoint = "/PostApi", paginate = false
             <h2 className="brand-font fs-1 text-center mb-5">{title}</h2>
             <div className="row g-4 justify-content-center">
                 {displayedPosts.map(p => {
-                    const imgUrl = p.imageUrl ? (p.imageUrl.startsWith('/') || p.imageUrl.startsWith('http') ? p.imageUrl : '/' + p.imageUrl) : "https://via.placeholder.com/400x250";
+                    const imgUrl = p.imageUrl ? (p.imageUrl.startsWith('/') || p.imageUrl.startsWith('http') ? p.imageUrl : '/' + p.imageUrl) : "/logo512.png";
                     const fullImg = imgUrl.startsWith('http') ? imgUrl : `${process.env.REACT_APP_IMAGE_BASE_URL || "http://localhost:5173"}${imgUrl}`;
                     return (
                     <div className="col-md-4" key={p.id}>

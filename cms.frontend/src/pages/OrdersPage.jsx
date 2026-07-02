@@ -7,7 +7,7 @@ const OrderCard = ({ order }) => {
     const [expanded, setExpanded] = useState(false);
     const firstItem = order.details[0];
     const moreCount = order.details.length - 1;
-    const imgUrl = firstItem?.imageUrl ? (firstItem.imageUrl.startsWith('/') || firstItem.imageUrl.startsWith('http') ? firstItem.imageUrl : '/' + firstItem.imageUrl) : "https://via.placeholder.com/100";
+    const imgUrl = firstItem?.imageUrl ? (firstItem.imageUrl.startsWith('/') || firstItem.imageUrl.startsWith('http') ? firstItem.imageUrl : '/' + firstItem.imageUrl) : "/logo512.png";
     const fullImg = imgUrl.startsWith('http') ? imgUrl : `${process.env.REACT_APP_IMAGE_BASE_URL || "http://localhost:5173"}${imgUrl}`;
 
     const getStatusBadge = (status) => {
@@ -48,7 +48,7 @@ const OrderCard = ({ order }) => {
                             <h6 className="fw-bold mb-3 text-secondary">CHI TIẾT SẢN PHẨM:</h6>
                             <div className="d-flex flex-column gap-3">
                                 {order.details.map((d, i) => {
-                                    const dImgUrl = d.imageUrl ? (d.imageUrl.startsWith('/') || d.imageUrl.startsWith('http') ? d.imageUrl : '/' + d.imageUrl) : "https://via.placeholder.com/100";
+                                    const dImgUrl = d.imageUrl ? (d.imageUrl.startsWith('/') || d.imageUrl.startsWith('http') ? d.imageUrl : '/' + d.imageUrl) : "/logo512.png";
                                     const dFullImg = dImgUrl.startsWith('http') ? dImgUrl : `${process.env.REACT_APP_IMAGE_BASE_URL || "http://localhost:5173"}${dImgUrl}`;
                                     return (
                                     <div key={i} className="d-flex align-items-center">

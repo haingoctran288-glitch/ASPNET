@@ -2,7 +2,6 @@ import React from 'react';
 import MainLayout from '../layouts/MainLayout';
 import HeroBanner from '../components/HeroBanner';
 import CategoryList from '../components/CategoryList';
-import PostCategoryList from '../components/PostCategoryList';
 import ProductList from '../components/ProductList';
 import PostList from '../components/PostList';
 

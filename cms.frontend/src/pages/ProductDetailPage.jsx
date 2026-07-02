@@ -22,7 +22,7 @@ const ProductDetailPage = () => {
     if (loading) return <MainLayout><div className="text-center py-5"><div className="spinner-border text-primary"></div></div></MainLayout>;
     if (!product) return <MainLayout><div className="text-center py-5"><h3>Không tìm thấy sản phẩm!</h3></div></MainLayout>;
 
-    const imgUrl = product.imageUrl ? (product.imageUrl.startsWith('/') || product.imageUrl.startsWith('http') ? product.imageUrl : '/' + product.imageUrl) : "https://via.placeholder.com/600x400";
+    const imgUrl = product.imageUrl ? (product.imageUrl.startsWith('/') || product.imageUrl.startsWith('http') ? product.imageUrl : '/' + product.imageUrl) : "/logo512.png";
     const fullImg = imgUrl.startsWith('http') ? imgUrl : `${process.env.REACT_APP_IMAGE_BASE_URL || "http://localhost:5173"}${imgUrl}`;
 
     const handleAddToCart = () => {
