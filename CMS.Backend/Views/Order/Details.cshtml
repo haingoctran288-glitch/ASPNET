@@ -14,7 +14,29 @@
                 <dt class="col-sm-3">@Html.DisplayNameFor(model => model.OrderDate)</dt>
                 <dd class="col-sm-9">@Html.DisplayFor(model => model.OrderDate)</dd>
                 <dt class="col-sm-3">@Html.DisplayNameFor(model => model.Status)</dt>
-                <dd class="col-sm-9">@Html.DisplayFor(model => model.Status)</dd>
+                <dd class="col-sm-9">
+                    @{
+                        string statusText = "Chờ duyệt";
+                        string statusBadge = "bg-warning text-dark";
+                        string statusIcon = "fa-clock";
+
+                        if (Model.Status == 1)
+                        {
+                            statusText = "Đang giao";
+                            statusBadge = "bg-info text-white";
+                            statusIcon = "fa-truck";
+                        }
+                        else if (Model.Status == 2)
+                        {
+                            statusText = "Đã xong";
+                            statusBadge = "bg-success text-white";
+                            statusIcon = "fa-check-circle";
+                        }
+                    }
+                    <span class="badge @statusBadge rounded-0 px-3 py-2 fw-bold text-uppercase">
+                        <i class="fas @statusIcon me-1"></i> @statusText
+                    </span>
+                </dd>
                 <dt class="col-sm-3">@Html.DisplayNameFor(model => model.Notes)</dt>
                 <dd class="col-sm-9">@Html.DisplayFor(model => model.Notes)</dd>
                 <dt class="col-sm-3">Customer</dt>

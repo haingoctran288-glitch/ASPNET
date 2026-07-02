@@ -59,16 +59,17 @@ namespace CMS.Backend.Services
             }
         }
 
-        public static async Task SendOrderStatusUpdateEmail(string toEmail, string customerName, int orderId, decimal totalAmount, string newStatus)
+        public static async Task SendOrderStatusUpdateEmail(string toEmail, string customerName, int orderId, decimal totalAmount, int newStatusInt)
         {
             try
             {
                 var fromAddress = new MailAddress("haingoctran288@gmail.com", "Hai Sport");
                 var toAddress = new MailAddress(toEmail);
                 const string fromPassword = "ydab mdzv dehn kqnq"; 
-                const string subject = $"Cập nhật trạng thái đơn hàng #{orderId}";
+                string subject = $"Cập nhật trạng thái đơn hàng #{orderId}";
                 
-                string statusColor = newStatus == "Đã xác nhận" ? "#198754" : (newStatus == "Đang giao hàng" ? "#0dcaf0" : (newStatus == "Đã giao" ? "#20c997" : "#dc3545"));
+                string newStatus = newStatusInt == 1 ? "Đang giao hàng" : (newStatusInt == 2 ? "Đã giao/Hoàn thành" : "Đã cập nhật");
+                string statusColor = newStatusInt == 1 ? "#0dcaf0" : (newStatusInt == 2 ? "#20c997" : "#198754");
                 
                 string body = $@"
                     <div style='font-family: Arial, sans-serif; max-width: 600px; margin: auto; padding: 20px; border: 1px solid #ddd; border-radius: 10px;'>
@@ -113,7 +114,7 @@ namespace CMS.Backend.Services
                 var fromAddress = new MailAddress("haingoctran288@gmail.com", "Hai Sport");
                 var toAddress = new MailAddress(toEmail);
                 const string fromPassword = "ydab mdzv dehn kqnq"; 
-                const string subject = $"Thay đổi chi tiết đơn hàng #{orderId}";
+                string subject = $"Thay đổi chi tiết đơn hàng #{orderId}";
                 
                 string body = $@"
                     <div style='font-family: Arial, sans-serif; max-width: 600px; margin: auto; padding: 20px; border: 1px solid #ddd; border-radius: 10px;'>

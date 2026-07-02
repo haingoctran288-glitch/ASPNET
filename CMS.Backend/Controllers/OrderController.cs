@@ -81,8 +81,7 @@ namespace CMS.Backend.Controllers
                 _context.Orders.Update(model);
                 _context.SaveChanges();
 
-                if (oldOrder != null && oldOrder.Status != model.Status && 
-                    (model.Status == "Đã xác nhận" || model.Status == "Đang giao hàng" || model.Status == "Đã giao" || model.Status == "Đã hủy"))
+                if (oldOrder != null && oldOrder.Status != model.Status && model.Status != 0) // 0 is usually pending/Chờ duyệt
                 {
                     var customer = oldOrder.Customer ?? _context.Customers.Find(model.CustomerId);
                     if (customer != null && !string.IsNullOrEmpty(customer.Email))
