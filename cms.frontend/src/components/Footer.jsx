@@ -16,7 +16,7 @@ const Footer = () => {
                         <h6 className="text-uppercase fw-bold mb-4">Liên kết</h6>
                         <p><Link to="/about" className="text-secondary text-decoration-none hover-white">Về chúng tôi</Link></p>
                         <p><Link to="/policy" className="text-secondary text-decoration-none hover-white">Chính sách</Link></p>
-                        <p><a href="http://localhost:5173" target="_blank" rel="noopener noreferrer" className="text-secondary text-decoration-none hover-white"><i className="fas fa-user-cog me-1"></i>Trang quản trị</a></p>
+
                     </div>
                     <div className="col-md-3 mx-auto mb-md-0 mb-4">
                         <h6 className="text-uppercase fw-bold mb-4">Liên hệ</h6>

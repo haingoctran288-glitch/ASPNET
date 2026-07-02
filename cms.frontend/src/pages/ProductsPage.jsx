@@ -13,31 +13,57 @@ const ProductsPage = () => {
     const navigate = useNavigate();
     const { addToCart } = useContext(CartContext);
     
+    // Quick buy modal state
+    const [selectedProduct, setSelectedProduct] = useState(null);
+    const [selectedSize, setSelectedSize] = useState('');
+    const [quantity, setQuantity] = useState(1);
+    
     // Parse query parameter
     const queryParams = new URLSearchParams(location.search);
     const categoryId = queryParams.get('category');
 
-    const handleBuyNow = (p) => {
-        let defaultSize = '';
+    const openBuyModal = (p) => {
+        setSelectedProduct(p);
         if (p.sizes) {
-            defaultSize = p.sizes.split(',')[0].trim();
+            setSelectedSize(p.sizes.split(',')[0].trim());
         }
+        setQuantity(1);
+        
+        setTimeout(() => {
+            const modalEl = document.getElementById('productsQuickBuyModal');
+            if (modalEl && window.bootstrap) {
+                const modal = new window.bootstrap.Modal(modalEl);
+                modal.show();
+            }
+        }, 50);
+    };
+
+    const handleConfirmBuy = () => {
+        if(!selectedProduct) return;
+        const p = selectedProduct;
         
         let currentCart = JSON.parse(localStorage.getItem('cart')) || [];
-        const existing = currentCart.find(i => i.id === p.id && i.selectedSize === defaultSize);
+        const existing = currentCart.find(i => i.id === p.id && i.selectedSize === selectedSize);
         let cartItemId = Date.now().toString();
         
         if(!existing) {
-            const newItem = { ...p, quantity: 1, selectedSize: defaultSize, cartItemId };
+            const newItem = { ...p, quantity: quantity, selectedSize: selectedSize, cartItemId };
             currentCart.push(newItem);
             localStorage.setItem('cart', JSON.stringify(currentCart));
         } else {
             cartItemId = existing.cartItemId;
-            existing.quantity += 1;
+            existing.quantity += quantity;
             localStorage.setItem('cart', JSON.stringify(currentCart));
         }
         
         localStorage.setItem('selectedItems', JSON.stringify([cartItemId]));
+        
+        const modalEl = document.getElementById('productsQuickBuyModal');
+        if (modalEl && window.bootstrap) {
+            const modal = window.bootstrap.Modal.getInstance(modalEl);
+            if(modal) modal.hide();
+        }
+        
         window.location.href = '/checkout';
     };
 
@@ -115,7 +141,7 @@ const ProductsPage = () => {
                                                     XEM CHI TIẾT
                                                 </Link>
                                                 <button 
-                                                    onClick={() => handleBuyNow(p)} 
+                                                    onClick={() => openBuyModal(p)} 
                                                     disabled={p.stockQuantity <= 0}
                                                     className="btn-buy-now d-flex align-items-center justify-content-center py-2 text-uppercase fw-bold shadow-sm" style={{flex: '4', fontFamily: 'Oswald', letterSpacing: '0.5px'}}>
                                                     MUA NGAY
@@ -154,6 +180,70 @@ const ProductsPage = () => {
                         )}
                     </>
                 )}
+            </div>
+
+            {/* Quick Buy Modal for ProductsPage */}
+            <div className="modal fade" id="productsQuickBuyModal" tabIndex="-1" aria-labelledby="productsQuickBuyModalLabel" aria-hidden="true">
+                <div className="modal-dialog modal-dialog-centered">
+                    <div className="modal-content border-0 shadow-lg">
+                        <div className="modal-header bg-dark text-white border-0">
+                            <h5 className="modal-title brand-font text-uppercase" id="productsQuickBuyModalLabel">
+                                {selectedProduct?.name}
+                            </h5>
+                            <button type="button" className="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div className="modal-body p-4">
+                            <div className="d-flex mb-4">
+                                <img 
+                                    src={selectedProduct?.imageUrl ? (selectedProduct.imageUrl.startsWith('http') ? selectedProduct.imageUrl : `http://localhost:5173${selectedProduct.imageUrl}`) : "https://via.placeholder.com/150"} 
+                                    alt={selectedProduct?.name} 
+                                    className="rounded" 
+                                    style={{width: '100px', height: '100px', objectFit: 'contain', border: '1px solid #eee'}} 
+                                />
+                                <div className="ms-3">
+                                    <h4 className="fw-bold text-danger mb-2">{(selectedProduct?.price || 0).toLocaleString('vi-VN')} ₫</h4>
+                                    <p className="text-muted small mb-0"><i className="fas fa-box me-1"></i> Còn {selectedProduct?.stockQuantity} sản phẩm</p>
+                                </div>
+                            </div>
+                            
+                            <div className="mb-4">
+                                <label className="fw-bold mb-2">CHỌN SIZE:</label>
+                                <div className="d-flex flex-wrap gap-2">
+                                    {selectedProduct?.sizes ? selectedProduct.sizes.split(',').map((size, idx) => {
+                                        const s = size.trim();
+                                        return (
+                                            <button 
+                                                key={idx}
+                                                type="button" 
+                                                className={`btn ${selectedSize === s ? 'btn-dark' : 'btn-outline-dark'} rounded-0 px-3 py-2 fw-bold`}
+                                                onClick={() => setSelectedSize(s)}
+                                            >
+                                                {s}
+                                            </button>
+                                        );
+                                    }) : (
+                                        <span className="text-muted">Không có thông tin size</span>
+                                    )}
+                                </div>
+                            </div>
+                            
+                            <div className="mb-4">
+                                <label className="fw-bold mb-2">SỐ LƯỢNG:</label>
+                                <div className="d-flex align-items-center" style={{width: '140px'}}>
+                                    <button className="btn btn-outline-dark rounded-0 px-3" onClick={() => setQuantity(Math.max(1, quantity - 1))}>-</button>
+                                    <input type="text" className="form-control text-center rounded-0 border-dark border-start-0 border-end-0 fw-bold" value={quantity} readOnly />
+                                    <button className="btn btn-outline-dark rounded-0 px-3" onClick={() => setQuantity(Math.min(selectedProduct?.stockQuantity || 1, quantity + 1))}>+</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="modal-footer border-0 bg-light p-3">
+                            <button type="button" className="btn btn-outline-secondary px-4 fw-bold rounded-pill" data-bs-dismiss="modal">Hủy</button>
+                            <button type="button" className="btn btn-danger px-4 fw-bold text-uppercase rounded-pill" onClick={handleConfirmBuy}>
+                                MUA NGAY <i className="fas fa-shopping-bag ms-1"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
             </div>
         </MainLayout>
     );
