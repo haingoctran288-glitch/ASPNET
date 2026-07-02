@@ -32,7 +32,7 @@
                 <div class="mt-2">
                     <small class="text-muted">Ảnh hiện tại:</small><br/>
                     @if (!string.IsNullOrEmpty(Model.ImageUrl)) {
-                        <img src="@Model.ImageUrl" style="height: 100px; border-radius: 8px; margin-top: 5px;" onerror="this.onerror=null; this.src='https://via.placeholder.com/150';" />
+                        <img src="@Model.ImageUrl" style="height: 100px; border-radius: 8px; margin-top: 5px;" onerror="this.onerror=null; this.style.display='none';" />
                     } else {
                         <span class="text-muted small">Chưa có ảnh</span>
                     }
@@ -59,7 +59,9 @@
     <script>
         CKEDITOR.replace('ContentEditor', {
             filebrowserUploadUrl: '/api/UploadApi/UploadCKEditor',
-            filebrowserUploadMethod: 'form'
+            filebrowserUploadMethod: 'form',
+            uploadUrl: '/api/UploadApi/UploadCKEditor',
+            versionCheck: false
         });
     </script>
 }

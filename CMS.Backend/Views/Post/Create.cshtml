@@ -50,7 +50,9 @@
     <script>
         CKEDITOR.replace('ContentEditor', {
             filebrowserUploadUrl: '/api/UploadApi/UploadCKEditor',
-            filebrowserUploadMethod: 'form'
+            filebrowserUploadMethod: 'form',
+            uploadUrl: '/api/UploadApi/UploadCKEditor',
+            versionCheck: false
         });
     </script>
 }
