@@ -25,11 +25,9 @@ namespace CMS.Backend.Controllers.Api
         [EmailAddress(ErrorMessage = "Email không hợp lệ")]
         public string Email { get; set; }
 
-        [Required(ErrorMessage = "Vui lòng nhập số điện thoại")]
-        public string Phone { get; set; }
+        public string? Phone { get; set; }
 
-        [Required(ErrorMessage = "Vui lòng nhập địa chỉ")]
-        public string Address { get; set; }
+        public string? Address { get; set; }
 
         [Required(ErrorMessage = "Vui lòng nhập mật khẩu")]
         [MinLength(6, ErrorMessage = "Mật khẩu phải từ 6 ký tự trở lên")]

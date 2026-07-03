@@ -25,7 +25,12 @@ const RegisterPage = () => {
             alert('Đăng ký thành công! Vui lòng đăng nhập.');
             navigate('/login');
         } catch (err) {
-            setError(err.response?.data?.message || 'Lỗi đăng ký');
+            if (err.response?.data?.errors) {
+                const errorMessages = Object.values(err.response.data.errors).flat().join(' | ');
+                setError(errorMessages);
+            } else {
+                setError(err.response?.data?.message || 'Lỗi đăng ký. Vui lòng thử lại.');
+            }
         }
     };
 
@@ -41,7 +46,7 @@ const RegisterPage = () => {
                                 <form onSubmit={handleRegister}>
                                     <div className="mb-3">
                                         <label className="form-label fw-bold" style={{fontFamily: 'Oswald'}}>HỌ VÀ TÊN</label>
-                                        <input type="text" className="form-control form-control-lg rounded-0 border-0 shadow-sm" placeholder="Nhập họ tên..." value={formData.fullName} onChange={e => setFormData({...formData, fullName: e.target.value})} required />
+                                        <input type="text" className="form-control form-control-lg rounded-0 border-0 shadow-sm" placeholder="Nhập họ tên..." value={formData.fullName} onChange={e => setFormData({...formData, fullName: e.target.value})} required minLength={2} />
                                     </div>
                                     <div className="mb-3">
                                         <label className="form-label fw-bold" style={{fontFamily: 'Oswald'}}>EMAIL</label>
@@ -50,7 +55,7 @@ const RegisterPage = () => {
                                     <div className="mb-3">
                                         <label className="form-label fw-bold" style={{fontFamily: 'Oswald'}}>MẬT KHẨU</label>
                                         <div className="input-group">
-                                            <input type={showPassword ? "text" : "password"} className="form-control form-control-lg rounded-0 border-0 shadow-sm" placeholder="Nhập mật khẩu..." value={formData.password} onChange={e => setFormData({...formData, password: e.target.value})} required />
+                                            <input type={showPassword ? "text" : "password"} className="form-control form-control-lg rounded-0 border-0 shadow-sm" placeholder="Nhập mật khẩu (ít nhất 6 ký tự)..." value={formData.password} onChange={e => setFormData({...formData, password: e.target.value})} required minLength={6} />
                                             <button type="button" className="btn btn-light bg-white border-0 shadow-sm rounded-0 px-3" onClick={() => setShowPassword(!showPassword)}>
                                                 <i className={`fas ${showPassword ? 'fa-eye-slash' : 'fa-eye'}`}></i>
                                             </button>
@@ -59,7 +64,7 @@ const RegisterPage = () => {
                                     <div className="mb-4">
                                         <label className="form-label fw-bold" style={{fontFamily: 'Oswald'}}>XÁC NHẬN MẬT KHẨU</label>
                                         <div className="input-group">
-                                            <input type={showConfirmPassword ? "text" : "password"} className="form-control form-control-lg rounded-0 border-0 shadow-sm" placeholder="Nhập lại mật khẩu..." value={formData.confirmPassword} onChange={e => setFormData({...formData, confirmPassword: e.target.value})} required />
+                                            <input type={showConfirmPassword ? "text" : "password"} className="form-control form-control-lg rounded-0 border-0 shadow-sm" placeholder="Nhập lại mật khẩu..." value={formData.confirmPassword} onChange={e => setFormData({...formData, confirmPassword: e.target.value})} required minLength={6} />
                                             <button type="button" className="btn btn-light bg-white border-0 shadow-sm rounded-0 px-3" onClick={() => setShowConfirmPassword(!showConfirmPassword)}>
                                                 <i className={`fas ${showConfirmPassword ? 'fa-eye-slash' : 'fa-eye'}`}></i>
                                             </button>
