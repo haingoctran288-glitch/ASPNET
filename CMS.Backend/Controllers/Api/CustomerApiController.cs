@@ -109,7 +109,29 @@ namespace CMS.Backend.Controllers.Api
             var customer = await _context.Customers
                 .FirstOrDefaultAsync(c => c.Email == req.Email);
 
-            if (customer == null || !BCrypt.Net.BCrypt.Verify(req.Password, customer.Password))
+            if (customer == null)
+            {
+                return Unauthorized(new { message = "Email hoặc mật khẩu không chính xác." });
+            }
+
+            bool isPasswordCorrect = false;
+            try 
+            {
+                if (customer.Password.StartsWith("$2a$") || customer.Password.StartsWith("$2b$") || customer.Password.StartsWith("$2y$"))
+                {
+                    isPasswordCorrect = BCrypt.Net.BCrypt.Verify(req.Password, customer.Password);
+                }
+                else
+                {
+                    isPasswordCorrect = (req.Password == customer.Password);
+                }
+            } 
+            catch 
+            {
+                isPasswordCorrect = (req.Password == customer.Password);
+            }
+
+            if (!isPasswordCorrect)
             {
                 return Unauthorized(new { message = "Email hoặc mật khẩu không chính xác." });
             }
