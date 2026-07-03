@@ -22,7 +22,7 @@ const CheckoutPage = () => {
     useEffect(() => {
         if (!customer) navigate('/login');
         if (checkoutItems.length === 0) navigate('/cart');
-    }, [customer, checkoutItems.length, navigate]);
+    }, [customer?.id, checkoutItems.length, navigate]);
 
     const total = checkoutItems.reduce((acc, item) => acc + (item.price * item.quantity), 0);
 

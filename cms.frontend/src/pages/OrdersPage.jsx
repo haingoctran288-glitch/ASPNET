@@ -104,7 +104,7 @@ const OrdersPage = () => {
         axiosClient.get(`/OrderApi/customer/${customer.id}`)
             .then(res => { setOrders(res.data); setLoading(false); })
             .catch(err => { console.error(err); setLoading(false); });
-    }, [customer, navigate]);
+    }, [customer?.id, navigate]);
 
     if (loading) return <MainLayout><div className="text-center py-5"><div className="spinner-border text-primary"></div></div></MainLayout>;
 
