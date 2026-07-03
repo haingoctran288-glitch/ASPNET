@@ -10,10 +10,12 @@ namespace CMS.Backend.Controllers
     public class CategoryProductController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly IWebHostEnvironment _env;
 
-        public CategoryProductController(ApplicationDbContext context)
+        public CategoryProductController(ApplicationDbContext context, IWebHostEnvironment env)
         {
             _context = context;
+            _env = env;
         }
 
         public IActionResult Index()
@@ -30,13 +32,28 @@ namespace CMS.Backend.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create(CategoryProduct model)
+        public async Task<IActionResult> Create(CategoryProduct model, IFormFile? imageFile)
         {
             ModelState.Remove("Products");
             if (ModelState.IsValid)
             {
+                if (imageFile != null && imageFile.Length > 0)
+                {
+                    string uploadsFolder = Path.Combine(_env.WebRootPath, "images", "categories");
+                    if (!Directory.Exists(uploadsFolder)) Directory.CreateDirectory(uploadsFolder);
+                    
+                    string uniqueFileName = Guid.NewGuid().ToString() + "_" + imageFile.FileName;
+                    string filePath = Path.Combine(uploadsFolder, uniqueFileName);
+                    
+                    using (var fileStream = new FileStream(filePath, FileMode.Create))
+                    {
+                        await imageFile.CopyToAsync(fileStream);
+                    }
+                    model.ImageUrl = "/images/categories/" + uniqueFileName;
+                }
+
                 _context.CategoriesProducts.Add(model);
-                _context.SaveChanges();
+                await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
             
@@ -60,15 +77,35 @@ namespace CMS.Backend.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(int id, CategoryProduct model)
+        public async Task<IActionResult> Edit(int id, CategoryProduct model, IFormFile? imageFile)
         {
             if (id != model.Id) return NotFound();
 
             ModelState.Remove("Products");
             if (ModelState.IsValid)
             {
+                var existingModel = _context.CategoriesProducts.AsNoTracking().FirstOrDefault(c => c.Id == id);
+                if (existingModel == null) return NotFound();
+
+                model.ImageUrl = existingModel.ImageUrl; // Giữ nguyên ảnh cũ nếu không up mới
+
+                if (imageFile != null && imageFile.Length > 0)
+                {
+                    string uploadsFolder = Path.Combine(_env.WebRootPath, "images", "categories");
+                    if (!Directory.Exists(uploadsFolder)) Directory.CreateDirectory(uploadsFolder);
+                    
+                    string uniqueFileName = Guid.NewGuid().ToString() + "_" + imageFile.FileName;
+                    string filePath = Path.Combine(uploadsFolder, uniqueFileName);
+                    
+                    using (var fileStream = new FileStream(filePath, FileMode.Create))
+                    {
+                        await imageFile.CopyToAsync(fileStream);
+                    }
+                    model.ImageUrl = "/images/categories/" + uniqueFileName;
+                }
+
                 _context.CategoriesProducts.Update(model);
-                _context.SaveChanges();
+                await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
             

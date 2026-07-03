@@ -9,7 +9,7 @@
             <h3 class="mb-0">Thêm mới CategoryProduct</h3>
         </div>
         <div class="card-body">
-            <form asp-action="Create">
+            <form asp-action="Create" enctype="multipart/form-data">
                 <div asp-validation-summary="All" class="text-danger"></div>
                 
             <div class="form-group mb-3">
@@ -19,6 +19,10 @@
             <div class="form-group mb-3">
                 <label asp-for="Description" class="control-label"></label>
                 <input asp-for="Description" class="form-control" type="text" />
+            </div>
+            <div class="form-group mb-3">
+                <label class="control-label">Hình ảnh danh mục</label>
+                <input type="file" name="imageFile" class="form-control" accept="image/*" />
             </div>
                 <div class="form-group mt-4">
                     <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Lưu</button>

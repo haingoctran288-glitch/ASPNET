@@ -27,12 +27,12 @@ const CategoryList = () => {
                                 className="text-decoration-none d-block category-block"
                             >
                                 <div className="card border-0 rounded-0 shadow-sm text-center bg-white overflow-hidden category-card">
-                                    <div className="img-wrapper d-flex align-items-center justify-content-center bg-light" style={{height: '150px', padding: '15px'}}>
+                                    <div className="img-wrapper d-flex align-items-center justify-content-center bg-white" style={{height: '150px', padding: '15px'}}>
                                         <img 
-                                            src={`https://ui-avatars.com/api/?name=${encodeURIComponent(c.name)}&background=random&color=fff&size=150`}
+                                            src={c.imageUrl ? (c.imageUrl.startsWith('http') ? c.imageUrl : `${process.env.REACT_APP_IMAGE_BASE_URL || "http://localhost:5173"}${c.imageUrl}`) : `https://ui-avatars.com/api/?name=${encodeURIComponent(c.name)}&background=random&color=fff&size=150`}
                                             alt={c.name} 
                                             className="img-fluid"
-                                            style={{transition: 'transform 0.3s ease', maxWidth: '80%'}}
+                                            style={{transition: 'transform 0.3s ease', maxHeight: '100%', maxWidth: '100%', objectFit: 'contain'}}
                                         />
                                     </div>
                                     <div className="card-body p-3">
