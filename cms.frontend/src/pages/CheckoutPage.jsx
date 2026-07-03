@@ -34,15 +34,14 @@ const CheckoutPage = () => {
                 notes: `SĐT: ${formData.phone}, Địa chỉ: ${formData.address}, Ghi chú: ${formData.notes}`,
                 items: checkoutItems.map(i => ({ productId: i.id, quantity: i.quantity, unitPrice: i.price, size: i.selectedSize }))
             };
-            await axiosClient.post('/OrderApi/checkout', reqData);
-            alert('Đặt hàng thành công!');
+            const response = await axiosClient.post('/OrderApi/checkout', reqData);
             
             // Lọc các item ĐÃ mua ra khỏi giỏ
             const remainingCart = cart.filter(item => !selectedItemIds.includes(item.cartItemId));
             localStorage.setItem('cart', JSON.stringify(remainingCart));
             localStorage.removeItem('selectedItems');
             
-            window.location.href = '/orders';
+            navigate(`/order-success?id=${response.data.orderId}`);
         } catch (err) {
             alert('Lỗi khi đặt hàng: ' + (err.response?.data?.message || err.message));
         }
