@@ -66,6 +66,12 @@
                                     statusBadge = "bg-success text-white";
                                     statusIcon = "fa-check-circle";
                                 }
+                                else if (item.Status == 3)
+                                {
+                                    statusText = "Đã hủy";
+                                    statusBadge = "bg-danger text-white";
+                                    statusIcon = "fa-times-circle";
+                                }
 
                                 <tr>
                                     <td class="fw-bold ps-4">#@item.Id</td>
@@ -79,10 +85,16 @@
                                     <td>@item.Notes</td>
                                     <td class="text-end pe-4">
                                         <div class="d-flex justify-content-end gap-2">
-                                            <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-info btn-sm rounded-0 text-white"><i class="fas fa-eye"></i></a>
-                                            <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-warning btn-sm rounded-0 text-dark"><i class="fas fa-edit"></i></a>
+                                            <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-info btn-sm rounded-0 text-white" title="Xem chi tiết"><i class="fas fa-eye"></i></a>
+                                            <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-warning btn-sm rounded-0 text-dark" title="Cập nhật"><i class="fas fa-edit"></i></a>
+                                            @if (item.Status != 3 && item.Status != 2)
+                                            {
+                                                <form asp-action="Cancel" asp-route-id="@item.Id" method="post" class="d-inline m-0" onsubmit="return confirm('Xác nhận HỦY đơn hàng này? Khách hàng sẽ nhận được Email thông báo.');">
+                                                    <button type="submit" class="btn btn-secondary btn-sm rounded-0" title="Hủy đơn"><i class="fas fa-ban"></i></button>
+                                                </form>
+                                            }
                                             <form asp-action="Delete" asp-route-id="@item.Id" method="post" class="d-inline m-0" onsubmit="return confirm('Xóa đơn hàng này?');">
-                                                <button type="submit" class="btn btn-danger btn-sm rounded-0"><i class="fas fa-trash"></i></button>
+                                                <button type="submit" class="btn btn-danger btn-sm rounded-0" title="Xóa"><i class="fas fa-trash"></i></button>
                                             </form>
                                         </div>
                                     </td>

@@ -116,5 +116,48 @@ namespace CMS.Backend.Controllers
             }
             return RedirectToAction(nameof(Index));
         }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Cancel(int id)
+        {
+            var model = await _context.Orders
+                .Include(o => o.OrderDetails)
+                .Include(o => o.Customer)
+                .FirstOrDefaultAsync(o => o.Id == id);
+            
+            if (model == null) return NotFound();
+            
+            if (model.Status != 3 && model.Status != 2) // Cannot cancel if already cancelled or completed
+            {
+                model.Status = 3; // 3 = Cancelled
+                
+                // Trả lại số lượng tồn kho
+                if (model.OrderDetails != null)
+                {
+                    foreach (var detail in model.OrderDetails)
+                    {
+                        var product = await _context.Products.FindAsync(detail.ProductId);
+                        if (product != null)
+                        {
+                            product.StockQuantity += detail.Quantity;
+                        }
+                    }
+                }
+
+                _context.Orders.Update(model);
+                await _context.SaveChangesAsync();
+                
+                // Send email
+                var customer = model.Customer;
+                if (customer != null && !string.IsNullOrEmpty(customer.Email))
+                {
+                    decimal total = model.OrderDetails?.Sum(x => x.Quantity * x.UnitPrice) ?? 0;
+                    _ = CMS.Backend.Services.EmailService.SendOrderStatusUpdateEmail(customer.Email, customer.FullName, model.Id, total, 3);
+                }
+            }
+
+            return RedirectToAction(nameof(Index));
+        }
     }
 }

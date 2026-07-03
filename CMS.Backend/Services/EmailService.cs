@@ -68,8 +68,8 @@ namespace CMS.Backend.Services
                 const string fromPassword = "ydab mdzv dehn kqnq"; 
                 string subject = $"Cập nhật trạng thái đơn hàng #{orderId}";
                 
-                string newStatus = newStatusInt == 1 ? "Đang giao hàng" : (newStatusInt == 2 ? "Đã giao/Hoàn thành" : "Đã cập nhật");
-                string statusColor = newStatusInt == 1 ? "#0dcaf0" : (newStatusInt == 2 ? "#20c997" : "#198754");
+                string newStatus = newStatusInt == 1 ? "Đang giao hàng" : (newStatusInt == 2 ? "Đã giao/Hoàn thành" : (newStatusInt == 3 ? "Đã hủy" : "Đã cập nhật"));
+                string statusColor = newStatusInt == 1 ? "#0dcaf0" : (newStatusInt == 2 ? "#20c997" : (newStatusInt == 3 ? "#dc3545" : "#198754"));
                 
                 string body = $@"
                     <div style='font-family: Arial, sans-serif; max-width: 600px; margin: auto; padding: 20px; border: 1px solid #ddd; border-radius: 10px;'>

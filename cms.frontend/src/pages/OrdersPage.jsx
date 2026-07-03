@@ -14,6 +14,7 @@ const OrderCard = ({ order }) => {
         if(status === 0) return <span className="badge bg-warning text-dark px-3 py-2 rounded-pill shadow-sm"><i className="fas fa-hourglass-half me-1"></i>Chờ duyệt</span>;
         if(status === 1) return <span className="badge bg-primary px-3 py-2 rounded-pill shadow-sm"><i className="fas fa-shipping-fast me-1"></i>Đang giao</span>;
         if(status === 2) return <span className="badge bg-success px-3 py-2 rounded-pill shadow-sm"><i className="fas fa-check-circle me-1"></i>Đã giao</span>;
+        if(status === 3) return <span className="badge bg-danger px-3 py-2 rounded-pill shadow-sm"><i className="fas fa-times-circle me-1"></i>Đã hủy</span>;
         return <span className="badge bg-secondary px-3 py-2 rounded-pill shadow-sm">Chưa rõ</span>;
     };
 
@@ -93,6 +94,7 @@ const OrdersPage = () => {
     const customer = JSON.parse(localStorage.getItem('customer'));
     const [orders, setOrders] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [activeTab, setActiveTab] = useState('all');
 
     useEffect(() => {
         if (!customer) {
@@ -106,6 +108,8 @@ const OrdersPage = () => {
 
     if (loading) return <MainLayout><div className="text-center py-5"><div className="spinner-border text-primary"></div></div></MainLayout>;
 
+    const filteredOrders = orders.filter(o => activeTab === 'all' || o.status === activeTab);
+
     return (
         <MainLayout>
             <div className="bg-dark text-white py-5 mb-5 text-center position-relative" style={{background: 'linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url(/banner-giay-bong-da.jpg) center/cover'}}>
@@ -116,7 +120,15 @@ const OrdersPage = () => {
                     <i className="fas fa-arrow-left me-2"></i> QUAY LẠI
                 </button>
                 
-                {orders.length === 0 ? (
+                <div className="d-flex overflow-auto mb-4 pb-2" style={{scrollbarWidth: 'none', gap: '10px'}}>
+                    <button className={`btn rounded-pill px-4 fw-bold shadow-sm ${activeTab === 'all' ? 'btn-dark' : 'btn-light border text-secondary'}`} onClick={() => setActiveTab('all')}>Tất cả</button>
+                    <button className={`btn rounded-pill px-4 fw-bold shadow-sm ${activeTab === 0 ? 'btn-warning text-dark' : 'btn-light border text-secondary'}`} onClick={() => setActiveTab(0)}>Chờ duyệt</button>
+                    <button className={`btn rounded-pill px-4 fw-bold shadow-sm ${activeTab === 1 ? 'btn-primary' : 'btn-light border text-secondary'}`} onClick={() => setActiveTab(1)}>Đang giao</button>
+                    <button className={`btn rounded-pill px-4 fw-bold shadow-sm ${activeTab === 2 ? 'btn-success' : 'btn-light border text-secondary'}`} onClick={() => setActiveTab(2)}>Đã giao</button>
+                    <button className={`btn rounded-pill px-4 fw-bold shadow-sm ${activeTab === 3 ? 'btn-danger' : 'btn-light border text-secondary'}`} onClick={() => setActiveTab(3)}>Đã hủy</button>
+                </div>
+                
+                {filteredOrders.length === 0 ? (
                     <div className="text-center bg-glass p-5 rounded-4 shadow-soft">
                         <i className="fas fa-box-open fa-4x text-muted mb-4 opacity-50"></i>
                         <h4 className="text-secondary fw-bold">Chưa có đơn hàng nào!</h4>
@@ -125,7 +137,7 @@ const OrdersPage = () => {
                 ) : (
                     <div className="row justify-content-center">
                         <div className="col-lg-9">
-                            {orders.map(order => <OrderCard key={order.id} order={order} />)}
+                            {filteredOrders.map(order => <OrderCard key={order.id} order={order} />)}
                         </div>
                     </div>
                 )}
