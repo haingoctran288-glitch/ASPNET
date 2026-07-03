@@ -65,7 +65,7 @@ namespace CMS.Backend.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(int id, Order model)
+        public async Task<IActionResult> Edit(int id, Order model)
         {
             if (id != model.Id) return NotFound();
 
@@ -79,7 +79,7 @@ namespace CMS.Backend.Controllers
                     .FirstOrDefault(o => o.Id == id);
                 
                 _context.Orders.Update(model);
-                _context.SaveChanges();
+                await _context.SaveChangesAsync();
 
                 if (oldOrder != null && oldOrder.Status != model.Status && model.Status != 0) // 0 is usually pending/Chờ duyệt
                 {
@@ -87,7 +87,7 @@ namespace CMS.Backend.Controllers
                     if (customer != null && !string.IsNullOrEmpty(customer.Email))
                     {
                         decimal total = oldOrder.OrderDetails?.Sum(x => x.Quantity * x.UnitPrice) ?? 0;
-                        _ = CMS.Backend.Services.EmailService.SendOrderStatusUpdateEmail(customer.Email, customer.FullName, model.Id, total, model.Status);
+                        await CMS.Backend.Services.EmailService.SendOrderStatusUpdateEmail(customer.Email, customer.FullName, model.Id, total, model.Status);
                     }
                 }
 
@@ -153,7 +153,7 @@ namespace CMS.Backend.Controllers
                 if (customer != null && !string.IsNullOrEmpty(customer.Email))
                 {
                     decimal total = model.OrderDetails?.Sum(x => x.Quantity * x.UnitPrice) ?? 0;
-                    _ = CMS.Backend.Services.EmailService.SendOrderStatusUpdateEmail(customer.Email, customer.FullName, model.Id, total, 3);
+                    await CMS.Backend.Services.EmailService.SendOrderStatusUpdateEmail(customer.Email, customer.FullName, model.Id, total, 3);
                 }
             }
 

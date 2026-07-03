@@ -68,8 +68,8 @@ namespace CMS.Backend.Controllers.Api
             if (customer != null && !string.IsNullOrEmpty(customer.Email))
             {
                 decimal totalAmount = req.Items.Sum(i => i.Quantity * i.UnitPrice);
-                // Gọi EmailService để gửi mail (bất đồng bộ)
-                _ = CMS.Backend.Services.EmailService.SendOrderConfirmationEmail(customer.Email, customer.FullName, order.Id, totalAmount);
+                // Gọi EmailService để gửi mail
+                await CMS.Backend.Services.EmailService.SendOrderConfirmationEmail(customer.Email, customer.FullName, order.Id, totalAmount);
             }
 
             return Ok(new { message = "Đặt hàng thành công", orderId = order.Id });

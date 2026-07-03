@@ -208,7 +208,7 @@ namespace CMS.Backend.Controllers.Api
             state.Expiry = DateTime.Now.AddSeconds(120);
             state.ResendCount++;
 
-            _ = CMS.Backend.Services.EmailService.SendOtpEmail(customer.Email, customer.FullName, otp);
+            await CMS.Backend.Services.EmailService.SendOtpEmail(customer.Email, customer.FullName, otp);
 
             return Ok(new { message = "Mã OTP đã được gửi đến email của bạn.", expirySeconds = 120, resendCount = state.ResendCount });
         }
@@ -262,6 +262,17 @@ namespace CMS.Backend.Controllers.Api
             _otpStorage.Remove(req.Email);
 
             return Ok(new { message = "Đổi mật khẩu thành công. Vui lòng đăng nhập lại." });
+        }
+
+        [HttpGet("test-email")]
+        public async Task<IActionResult> TestEmail(string email)
+        {
+            try {
+                await CMS.Backend.Services.EmailService.SendOrderStatusUpdateEmail(email, "Test User", 999, 100000, 3);
+                return Ok(new { message = "Email sent successfully to " + email });
+            } catch (Exception ex) {
+                return StatusCode(500, new { message = ex.Message, inner = ex.InnerException?.Message });
+            }
         }
     }
 }
