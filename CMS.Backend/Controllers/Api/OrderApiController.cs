@@ -68,8 +68,25 @@ namespace CMS.Backend.Controllers.Api
             if (customer != null && !string.IsNullOrEmpty(customer.Email))
             {
                 decimal totalAmount = req.Items.Sum(i => i.Quantity * i.UnitPrice);
+                
+                string itemsHtml = "";
+                foreach(var item in req.Items)
+                {
+                    var p = await _context.Products.FindAsync(item.ProductId);
+                    string pName = p != null ? p.Name : "Sản phẩm";
+                    string sizeInfo = !string.IsNullOrEmpty(item.Size) ? $"<br/><small style='color: #858796;'>Size: {item.Size}</small>" : "";
+                    itemsHtml += $@"
+                        <tr>
+                            <td style='padding: 10px 0; border-bottom: 1px dashed #e3e6f0;'>
+                                <strong>{pName}</strong>{sizeInfo}
+                            </td>
+                            <td style='padding: 10px 0; border-bottom: 1px dashed #e3e6f0; text-align: center;'>x{item.Quantity}</td>
+                            <td style='padding: 10px 0; border-bottom: 1px dashed #e3e6f0; text-align: right;'><strong>{(item.Quantity * item.UnitPrice).ToString("N0")} đ</strong></td>
+                        </tr>";
+                }
+                
                 // Gọi EmailService để gửi mail
-                await CMS.Backend.Services.EmailService.SendOrderConfirmationEmail(customer.Email, customer.FullName, order.Id, totalAmount, customer.Address, customer.Phone, order.OrderDate);
+                await CMS.Backend.Services.EmailService.SendOrderConfirmationEmail(customer.Email, customer.FullName, order.Id, totalAmount, customer.Address, customer.Phone, order.OrderDate, itemsHtml);
             }
 
             return Ok(new { message = "Đặt hàng thành công", orderId = order.Id });

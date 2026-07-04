@@ -5,7 +5,7 @@ namespace CMS.Backend.Services
 {
     public class EmailService
     {
-        public static async Task SendOrderConfirmationEmail(string toEmail, string customerName, int orderId, decimal totalAmount, string customerAddress, string customerPhone, DateTime orderDate)
+        public static async Task SendOrderConfirmationEmail(string toEmail, string customerName, int orderId, decimal totalAmount, string customerAddress, string customerPhone, DateTime orderDate, string itemsHtml = "")
         {
             try
             {
@@ -55,8 +55,16 @@ namespace CMS.Backend.Services
                                     <td style='padding: 8px 0;'><span style='background-color: #f6c23e; color: #fff; padding: 4px 10px; border-radius: 20px; font-size: 12px; font-weight: bold;'>Chờ duyệt</span></td>
                                 </tr>
                                 <tr>
-                                    <td style='padding: 15px 0 5px 0; border-top: 1px dashed #ccc; margin-top: 10px;'><strong>Tổng thanh toán:</strong></td>
-                                    <td style='padding: 15px 0 5px 0; border-top: 1px dashed #ccc; margin-top: 10px;'><strong style='color: #e74a3b; font-size: 18px;'>{totalAmount.ToString("N0")} VNĐ</strong></td>
+                                    <td colspan='2' style='padding: 15px 0 5px 0; border-top: 2px solid #e3e6f0; margin-top: 15px;'>
+                                        <h4 style='margin: 10px 0; color: #2c3e50;'>Chi tiết sản phẩm:</h4>
+                                        <table style='width: 100%; border-collapse: collapse; font-size: 14px;'>
+                                            {itemsHtml}
+                                        </table>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style='padding: 15px 0 5px 0; border-top: 2px solid #e3e6f0; margin-top: 10px;'><strong>Tổng thanh toán:</strong></td>
+                                    <td style='padding: 15px 0 5px 0; border-top: 2px solid #e3e6f0; margin-top: 10px; text-align: right;'><strong style='color: #e74a3b; font-size: 18px;'>{totalAmount.ToString("N0")} VNĐ</strong></td>
                                 </tr>
                             </table>
                         </div>
