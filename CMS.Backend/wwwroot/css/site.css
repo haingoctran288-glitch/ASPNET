@@ -229,3 +229,10 @@ h1, h2, h3, h4, h5, h6, .brand-font {
         margin-left: 0; /* Cover screen or push, let's keep it 0 for mobile overlay */
     }
 }
+
+/* Fix for Summernote images alignment */
+.note-editable img {
+    max-width: 100% !important;
+    height: auto !important;
+    display: inline-block;
+}
