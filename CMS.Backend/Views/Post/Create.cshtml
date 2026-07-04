@@ -52,7 +52,8 @@
             if (typeof CKEDITOR !== 'undefined') {
                 CKEDITOR.replace('Content', {
                     filebrowserUploadUrl: '/api/UploadApi/UploadCKEditor',
-                    filebrowserUploadMethod: 'form'
+                    filebrowserImageUploadUrl: '/api/UploadApi/UploadCKEditor',
+                    filebrowserUploadMethod: 'xhr'
                 });
             } else {
                 console.error("CKEditor failed to load from CDN.");
