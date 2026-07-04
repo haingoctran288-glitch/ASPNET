@@ -17,6 +17,7 @@ namespace CMS.Backend.Services
                 const string fromPassword = "ydab mdzv dehn kqnq"; 
                 const string subject = "Xác nhận đơn hàng thành công từ Hai Sport";
                 
+                string body = $@"
                     <div style='font-family: ""Segoe UI"", Tahoma, Geneva, Verdana, sans-serif; max-width: 650px; margin: auto; padding: 30px; border: 1px solid #e3e6f0; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05);'>
                         <div style='text-align: center; border-bottom: 2px solid #f8f9fc; padding-bottom: 20px; margin-bottom: 25px;'>
                             <h1 style='color: #4e73df; margin: 0; font-size: 28px; text-transform: uppercase; letter-spacing: 2px;'>HAI SPORT</h1>
