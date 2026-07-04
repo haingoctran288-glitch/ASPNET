@@ -11,6 +11,7 @@ const CheckoutPage = () => {
     const customer = JSON.parse(localStorage.getItem('customer'));
     const selectedItemIds = JSON.parse(localStorage.getItem('selectedItems')) || [];
     const checkoutItems = cart.filter(item => selectedItemIds.includes(item.cartItemId));
+    const orderSuccess = React.useRef(false);
     
     const [formData, setFormData] = useState({
         fullName: customer?.fullName || '',
@@ -22,7 +23,7 @@ const CheckoutPage = () => {
 
     useEffect(() => {
         if (!customer) navigate('/login');
-        if (checkoutItems.length === 0) navigate('/cart');
+        if (checkoutItems.length === 0 && !orderSuccess.current) navigate('/cart');
     }, [customer?.id, checkoutItems.length, navigate]);
 
     const total = checkoutItems.reduce((acc, item) => acc + (item.price * item.quantity), 0);
@@ -39,6 +40,7 @@ const CheckoutPage = () => {
             const response = await axiosClient.post('/OrderApi/checkout', reqData);
             
             // Lọc các item ĐÃ mua ra khỏi giỏ
+            orderSuccess.current = true;
             const remainingCart = cart.filter(item => !selectedItemIds.includes(item.cartItemId));
             setCart(remainingCart);
             localStorage.removeItem('selectedItems');
