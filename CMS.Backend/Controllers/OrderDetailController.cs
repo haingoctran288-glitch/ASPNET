@@ -114,8 +114,26 @@ namespace CMS.Backend.Controllers
 
             if (order != null && order.Customer != null && !string.IsNullOrEmpty(order.Customer.Email))
             {
+                string itemsHtml = "";
+                if (order.OrderDetails != null)
+                {
+                    foreach (var item in order.OrderDetails)
+                    {
+                        var p = await _context.Products.FindAsync(item.ProductId);
+                        string pName = p != null ? p.Name : "Sản phẩm";
+                        string sizeInfo = !string.IsNullOrEmpty(item.Size) ? $"<br/><small style='color: #858796;'>Size: {item.Size}</small>" : "";
+                        itemsHtml += $@"
+                            <tr>
+                                <td style='padding: 10px 0; border-bottom: 1px dashed #e3e6f0;'>
+                                    <strong>{pName}</strong>{sizeInfo}
+                                </td>
+                                <td style='padding: 10px 0; border-bottom: 1px dashed #e3e6f0; text-align: center;'>x{item.Quantity}</td>
+                                <td style='padding: 10px 0; border-bottom: 1px dashed #e3e6f0; text-align: right;'><strong>{(item.Quantity * item.UnitPrice).ToString("N0")} đ</strong></td>
+                            </tr>";
+                    }
+                }
                 decimal newTotal = order.OrderDetails?.Sum(x => x.Quantity * x.UnitPrice) ?? 0;
-                await CMS.Backend.Services.EmailService.SendOrderModifiedEmail(order.Customer.Email, order.Customer.FullName, orderId, newTotal);
+                await CMS.Backend.Services.EmailService.SendOrderModifiedEmail(order.Customer.Email, order.Customer.FullName, orderId, newTotal, itemsHtml);
             }
         }
     }

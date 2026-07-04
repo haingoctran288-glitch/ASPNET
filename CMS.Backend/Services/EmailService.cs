@@ -104,7 +104,7 @@ namespace CMS.Backend.Services
             }
         }
 
-        public static async Task SendOrderStatusUpdateEmail(string toEmail, string customerName, int orderId, decimal totalAmount, int newStatusInt)
+        public static async Task SendOrderStatusUpdateEmail(string toEmail, string customerName, int orderId, decimal totalAmount, int newStatusInt, string itemsHtml = "")
         {
             try
             {
@@ -122,8 +122,12 @@ namespace CMS.Backend.Services
                         <p>Xin chào <strong>{customerName}</strong>,</p>
                         <p>Đơn hàng <strong>#{orderId}</strong> của bạn vừa được cập nhật trạng thái mới.</p>
                         <div style='background-color: #f8f9fc; padding: 15px; border-radius: 8px; margin: 20px 0;'>
-                            <p style='margin: 5px 0;'>Tổng thanh toán: <strong>{totalAmount.ToString("N0")} VNĐ</strong></p>
                             <p style='margin: 5px 0;'>Tình trạng mới: <span style='color: {statusColor}; font-weight: bold; text-transform: uppercase;'>{newStatus}</span></p>
+                            <h4 style='margin: 15px 0 10px 0; border-top: 1px solid #e3e6f0; padding-top: 15px; color: #2c3e50;'>Chi tiết đơn hàng:</h4>
+                            <table style='width: 100%; border-collapse: collapse; font-size: 14px;'>
+                                {itemsHtml}
+                            </table>
+                            <p style='margin: 15px 0 5px 0; text-align: right; border-top: 2px solid #e3e6f0; padding-top: 10px;'>Tổng thanh toán: <strong style='font-size: 16px; color: #e74a3b;'>{totalAmount.ToString("N0")} VNĐ</strong></p>
                         </div>
                         <p>Cảm ơn bạn đã tin tưởng mua sắm tại Hai Sport!</p>
                         <br/>
@@ -152,7 +156,7 @@ namespace CMS.Backend.Services
             }
         }
 
-        public static async Task SendOrderModifiedEmail(string toEmail, string customerName, int orderId, decimal newTotalAmount)
+        public static async Task SendOrderModifiedEmail(string toEmail, string customerName, int orderId, decimal newTotalAmount, string itemsHtml = "")
         {
             try
             {
@@ -167,7 +171,11 @@ namespace CMS.Backend.Services
                         <p>Xin chào <strong>{customerName}</strong>,</p>
                         <p>Quản trị viên vừa thay đổi/cập nhật sản phẩm trong đơn hàng <strong>#{orderId}</strong> của bạn.</p>
                         <div style='background-color: #f8f9fc; padding: 15px; border-radius: 8px; margin: 20px 0;'>
-                            <p style='margin: 5px 0;'>Tổng tiền mới nhất cần thanh toán: <strong style='color: #dc3545; font-size: 18px;'>{newTotalAmount.ToString("N0")} VNĐ</strong></p>
+                            <h4 style='margin: 5px 0 10px 0; color: #2c3e50;'>Danh sách sản phẩm mới cập nhật:</h4>
+                            <table style='width: 100%; border-collapse: collapse; font-size: 14px;'>
+                                {itemsHtml}
+                            </table>
+                            <p style='margin: 15px 0 5px 0; text-align: right; border-top: 2px solid #e3e6f0; padding-top: 10px;'>Tổng tiền mới nhất cần thanh toán: <strong style='color: #dc3545; font-size: 18px;'>{newTotalAmount.ToString("N0")} VNĐ</strong></p>
                         </div>
                         <p>Vui lòng đăng nhập vào website hoặc xem chi tiết để biết thêm thông tin. Xin lỗi vì sự bất tiện này!</p>
                         <br/>

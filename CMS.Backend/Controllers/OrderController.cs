@@ -87,7 +87,24 @@ namespace CMS.Backend.Controllers
                     if (customer != null && !string.IsNullOrEmpty(customer.Email))
                     {
                         decimal total = oldOrder.OrderDetails?.Sum(x => x.Quantity * x.UnitPrice) ?? 0;
-                        await CMS.Backend.Services.EmailService.SendOrderStatusUpdateEmail(customer.Email, customer.FullName, model.Id, total, model.Status);
+                        string itemsHtml = "";
+                        if (oldOrder.OrderDetails != null)
+                        {
+                            foreach (var item in oldOrder.OrderDetails)
+                            {
+                                string pName = item.Product != null ? item.Product.Name : "Sản phẩm";
+                                string sizeInfo = !string.IsNullOrEmpty(item.Size) ? $"<br/><small style='color: #858796;'>Size: {item.Size}</small>" : "";
+                                itemsHtml += $@"
+                                    <tr>
+                                        <td style='padding: 10px 0; border-bottom: 1px dashed #e3e6f0;'>
+                                            <strong>{pName}</strong>{sizeInfo}
+                                        </td>
+                                        <td style='padding: 10px 0; border-bottom: 1px dashed #e3e6f0; text-align: center;'>x{item.Quantity}</td>
+                                        <td style='padding: 10px 0; border-bottom: 1px dashed #e3e6f0; text-align: right;'><strong>{(item.Quantity * item.UnitPrice).ToString("N0")} đ</strong></td>
+                                    </tr>";
+                            }
+                        }
+                        await CMS.Backend.Services.EmailService.SendOrderStatusUpdateEmail(customer.Email, customer.FullName, model.Id, total, model.Status, itemsHtml);
                     }
                 }
 
@@ -153,7 +170,24 @@ namespace CMS.Backend.Controllers
                 if (customer != null && !string.IsNullOrEmpty(customer.Email))
                 {
                     decimal total = model.OrderDetails?.Sum(x => x.Quantity * x.UnitPrice) ?? 0;
-                    await CMS.Backend.Services.EmailService.SendOrderStatusUpdateEmail(customer.Email, customer.FullName, model.Id, total, 3);
+                    string itemsHtml = "";
+                    if (model.OrderDetails != null)
+                    {
+                        foreach (var item in model.OrderDetails)
+                        {
+                            var pName = item.Product != null ? item.Product.Name : "Sản phẩm";
+                            string sizeInfo = !string.IsNullOrEmpty(item.Size) ? $"<br/><small style='color: #858796;'>Size: {item.Size}</small>" : "";
+                            itemsHtml += $@"
+                                <tr>
+                                    <td style='padding: 10px 0; border-bottom: 1px dashed #e3e6f0;'>
+                                        <strong>{pName}</strong>{sizeInfo}
+                                    </td>
+                                    <td style='padding: 10px 0; border-bottom: 1px dashed #e3e6f0; text-align: center;'>x{item.Quantity}</td>
+                                    <td style='padding: 10px 0; border-bottom: 1px dashed #e3e6f0; text-align: right;'><strong>{(item.Quantity * item.UnitPrice).ToString("N0")} đ</strong></td>
+                                </tr>";
+                        }
+                    }
+                    await CMS.Backend.Services.EmailService.SendOrderStatusUpdateEmail(customer.Email, customer.FullName, model.Id, total, 3, itemsHtml);
                 }
             }
 
