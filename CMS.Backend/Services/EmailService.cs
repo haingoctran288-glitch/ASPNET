@@ -5,7 +5,7 @@ namespace CMS.Backend.Services
 {
     public class EmailService
     {
-        public static async Task SendOrderConfirmationEmail(string toEmail, string customerName, int orderId, decimal totalAmount)
+        public static async Task SendOrderConfirmationEmail(string toEmail, string customerName, int orderId, decimal totalAmount, string customerAddress, string customerPhone, DateTime orderDate)
         {
             try
             {
@@ -17,19 +17,55 @@ namespace CMS.Backend.Services
                 const string fromPassword = "ydab mdzv dehn kqnq"; 
                 const string subject = "Xác nhận đơn hàng thành công từ Hai Sport";
                 
-                string body = $@"
-                    <div style='font-family: Arial, sans-serif; max-width: 600px; margin: auto; padding: 20px; border: 1px solid #ddd; border-radius: 10px;'>
-                        <h2 style='color: #4e73df; text-align: center;'>Cảm ơn bạn đã mua hàng tại Hai Sport!</h2>
-                        <p>Xin chào <strong>{customerName}</strong>,</p>
-                        <p>Đơn hàng của bạn đã được hệ thống ghi nhận thành công. Dưới đây là thông tin tóm tắt đơn hàng của bạn:</p>
-                        <div style='background-color: #f8f9fc; padding: 15px; border-radius: 8px; margin: 20px 0;'>
-                            <p style='margin: 5px 0;'>Mã đơn hàng: <strong style='color: #e74a3b;'>#{orderId}</strong></p>
-                            <p style='margin: 5px 0;'>Tổng thanh toán: <strong>{totalAmount.ToString("N0")} VNĐ</strong></p>
-                            <p style='margin: 5px 0;'>Tình trạng: <span style='color: #f6c23e; font-weight: bold;'>Chờ duyệt</span></p>
+                    <div style='font-family: ""Segoe UI"", Tahoma, Geneva, Verdana, sans-serif; max-width: 650px; margin: auto; padding: 30px; border: 1px solid #e3e6f0; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05);'>
+                        <div style='text-align: center; border-bottom: 2px solid #f8f9fc; padding-bottom: 20px; margin-bottom: 25px;'>
+                            <h1 style='color: #4e73df; margin: 0; font-size: 28px; text-transform: uppercase; letter-spacing: 2px;'>HAI SPORT</h1>
+                            <p style='color: #858796; margin-top: 5px;'>Xác nhận đơn hàng thành công</p>
                         </div>
-                        <p>Chúng tôi sẽ sớm liên hệ với bạn qua số điện thoại để xác nhận giao hàng. Vui lòng giữ liên lạc nhé!</p>
-                        <br/>
-                        <p style='text-align: center; color: #858796; font-size: 12px;'>Đây là email tự động, vui lòng không phản hồi lại email này.</p>
+                        <h2 style='color: #2c3e50;'>Cảm ơn bạn đã tin tưởng Hai Sport!</h2>
+                        <p style='font-size: 15px; color: #5a5c69; line-height: 1.6;'>Xin chào <strong style='color: #4e73df;'>{customerName}</strong>,</p>
+                        <p style='font-size: 15px; color: #5a5c69; line-height: 1.6;'>Đơn hàng của bạn đã được hệ thống của chúng tôi ghi nhận. Vui lòng kiểm tra lại thông tin chi tiết bên dưới:</p>
+                        
+                        <div style='background-color: #f8f9fc; padding: 25px; border-radius: 10px; margin: 25px 0; border-left: 4px solid #4e73df;'>
+                            <h3 style='margin-top: 0; color: #2c3e50; border-bottom: 1px solid #e3e6f0; padding-bottom: 10px;'>THÔNG TIN ĐƠN HÀNG <span style='color: #e74a3b;'>#{orderId}</span></h3>
+                            <table style='width: 100%; border-collapse: collapse; font-size: 14px; color: #5a5c69;'>
+                                <tr>
+                                    <td style='padding: 8px 0; width: 40%;'><strong>Ngày đặt hàng:</strong></td>
+                                    <td style='padding: 8px 0; color: #2c3e50;'>{orderDate.ToString("dd/MM/yyyy HH:mm:ss")}</td>
+                                </tr>
+                                <tr>
+                                    <td style='padding: 8px 0;'><strong>Người nhận:</strong></td>
+                                    <td style='padding: 8px 0; color: #2c3e50;'>{customerName}</td>
+                                </tr>
+                                <tr>
+                                    <td style='padding: 8px 0;'><strong>Số điện thoại:</strong></td>
+                                    <td style='padding: 8px 0; color: #2c3e50;'>{(string.IsNullOrEmpty(customerPhone) ? "Chưa cập nhật" : customerPhone)}</td>
+                                </tr>
+                                <tr>
+                                    <td style='padding: 8px 0;'><strong>Địa chỉ giao hàng:</strong></td>
+                                    <td style='padding: 8px 0; color: #2c3e50;'>{(string.IsNullOrEmpty(customerAddress) ? "Chưa cập nhật" : customerAddress)}</td>
+                                </tr>
+                                <tr>
+                                    <td style='padding: 8px 0;'><strong>Phương thức thanh toán:</strong></td>
+                                    <td style='padding: 8px 0; color: #2c3e50;'>Thanh toán khi nhận hàng (COD)</td>
+                                </tr>
+                                <tr>
+                                    <td style='padding: 8px 0;'><strong>Tình trạng đơn:</strong></td>
+                                    <td style='padding: 8px 0;'><span style='background-color: #f6c23e; color: #fff; padding: 4px 10px; border-radius: 20px; font-size: 12px; font-weight: bold;'>Chờ duyệt</span></td>
+                                </tr>
+                                <tr>
+                                    <td style='padding: 15px 0 5px 0; border-top: 1px dashed #ccc; margin-top: 10px;'><strong>Tổng thanh toán:</strong></td>
+                                    <td style='padding: 15px 0 5px 0; border-top: 1px dashed #ccc; margin-top: 10px;'><strong style='color: #e74a3b; font-size: 18px;'>{totalAmount.ToString("N0")} VNĐ</strong></td>
+                                </tr>
+                            </table>
+                        </div>
+                        
+                        <p style='font-size: 15px; color: #5a5c69; line-height: 1.6;'>Chúng tôi sẽ sớm liên hệ với bạn qua số điện thoại để xác nhận đơn hàng và tiến hành giao hàng. Vui lòng giữ liên lạc nhé!</p>
+                        
+                        <div style='margin-top: 40px; padding-top: 20px; border-top: 1px solid #e3e6f0; text-align: center;'>
+                            <p style='color: #858796; font-size: 13px; margin-bottom: 5px;'>Trân trọng,<br/><strong>Đội ngũ HAI SPORT</strong></p>
+                            <p style='color: #b7b9cc; font-size: 11px; margin-top: 15px;'>Đây là email tự động, vui lòng không phản hồi lại email này.</p>
+                        </div>
                     </div>
                 ";
 
