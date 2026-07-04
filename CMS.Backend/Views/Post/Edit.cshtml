@@ -55,18 +55,48 @@
 </div>
 
 @section Scripts {
-    <script src="https://cdn.ckeditor.com/4.22.1/full/ckeditor.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
     <script>
         $(document).ready(function() {
-            if (typeof CKEDITOR !== 'undefined') {
-                CKEDITOR.replace('Content', {
-                    filebrowserUploadUrl: '/api/UploadApi/UploadCKEditor',
-                    filebrowserImageUploadUrl: '/api/UploadApi/UploadCKEditor',
-                    filebrowserUploadMethod: 'xhr'
-                });
-            } else {
-                console.error("CKEditor failed to load from CDN.");
-            }
+            $('#Content').summernote({
+                placeholder: 'Nhập nội dung bài viết...',
+                tabsize: 2,
+                height: 400,
+                toolbar: [
+                    ['style', ['style']],
+                    ['font', ['bold', 'italic', 'underline', 'clear']],
+                    ['color', ['color']],
+                    ['para', ['ul', 'ol', 'paragraph']],
+                    ['table', ['table']],
+                    ['insert', ['link', 'picture', 'video']],
+                    ['view', ['fullscreen', 'codeview', 'help']]
+                ],
+                callbacks: {
+                    onImageUpload: function(files) {
+                        var data = new FormData();
+                        data.append("upload", files[0]);
+                        $.ajax({
+                            data: data,
+                            type: "POST",
+                            url: "/api/UploadApi/UploadCKEditor",
+                            cache: false,
+                            contentType: false,
+                            processData: false,
+                            success: function(response) {
+                                if (response.uploaded === 1) {
+                                    $('#Content').summernote('insertImage', response.url);
+                                } else {
+                                    alert('Lỗi tải ảnh lên');
+                                }
+                            },
+                            error: function() {
+                                alert('Đã có lỗi xảy ra khi tải ảnh!');
+                            }
+                        });
+                    }
+                }
+            });
         });
     </script>
 }
