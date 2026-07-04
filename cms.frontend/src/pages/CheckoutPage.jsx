@@ -5,7 +5,8 @@ import { CartContext } from '../context/CartContext';
 import axiosClient from '../api/axiosClient';
 
 const CheckoutPage = () => {
-    const { cart } = useContext(CartContext);
+    const { cart, setCart } = useContext(CartContext);
+    const [isLoading, setIsLoading] = useState(false);
     const navigate = useNavigate();
     const customer = JSON.parse(localStorage.getItem('customer'));
     const selectedItemIds = JSON.parse(localStorage.getItem('selectedItems')) || [];
@@ -28,6 +29,7 @@ const CheckoutPage = () => {
 
     const handleOrder = async (e) => {
         e.preventDefault();
+        setIsLoading(true);
         try {
             const reqData = {
                 customerId: customer.id,
@@ -38,12 +40,14 @@ const CheckoutPage = () => {
             
             // Lọc các item ĐÃ mua ra khỏi giỏ
             const remainingCart = cart.filter(item => !selectedItemIds.includes(item.cartItemId));
-            localStorage.setItem('cart', JSON.stringify(remainingCart));
+            setCart(remainingCart);
             localStorage.removeItem('selectedItems');
             
             navigate(`/order-success?id=${response.data.orderId}`);
         } catch (err) {
             alert('Lỗi khi đặt hàng: ' + (err.response?.data?.message || err.message));
+        } finally {
+            setIsLoading(false);
         }
     };
 
@@ -97,7 +101,13 @@ const CheckoutPage = () => {
                                     </div>
                                 </div>
                                 
-                                <button type="submit" className="btn btn-primary btn-lg w-100 rounded-pill fw-bold shadow-lg btn-glow">Xác nhận đặt hàng</button>
+                                <button type="submit" className="btn btn-primary btn-lg w-100 rounded-pill fw-bold shadow-lg btn-glow" disabled={isLoading}>
+                                    {isLoading ? (
+                                        <><span className="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span> Đang xử lý...</>
+                                    ) : (
+                                        "Xác nhận đặt hàng"
+                                    )}
+                                </button>
                             </form>
                         </div>
                     </div>
