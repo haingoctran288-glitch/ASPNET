@@ -22,6 +22,13 @@ const PostDetailPage = () => {
     const IMAGE_BASE_URL = process.env.REACT_APP_IMAGE_BASE_URL || 'http://localhost:5173';
     const fullImg = imgUrl.startsWith('http') ? imgUrl : `${IMAGE_BASE_URL}${imgUrl}`.replace(/([^:]\/)\/+/g, "$1");
 
+    // Xử lý đường dẫn ảnh trong nội dung bài viết
+    let processedContent = post.content || '';
+    if (processedContent && IMAGE_BASE_URL) {
+        // Tìm các thẻ img có src bắt đầu bằng /uploads/ hoặc /images/ và nối thêm IMAGE_BASE_URL
+        processedContent = processedContent.replace(/src=["'](\/(uploads|images)\/[^"']+)["']/g, `src="${IMAGE_BASE_URL}$1"`);
+    }
+
     return (
         <MainLayout>
             <div className="container py-5 mb-5">
@@ -43,7 +50,7 @@ const PostDetailPage = () => {
                         </div>
                         
                         <div className="post-content" style={{fontFamily: 'Inter', lineHeight: '1.8', fontSize: '1.1rem', color: '#444'}}
-                             dangerouslySetInnerHTML={{ __html: post.content }}>
+                             dangerouslySetInnerHTML={{ __html: processedContent }}>
                         </div>
                     </div>
                 </div>
