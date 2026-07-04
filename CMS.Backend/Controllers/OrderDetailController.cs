@@ -31,15 +31,15 @@ namespace CMS.Backend.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create(OrderDetail model)
+        public async Task<IActionResult> Create(OrderDetail model)
         {
             ModelState.Remove("Order");
             ModelState.Remove("Product");
             if (ModelState.IsValid)
             {
                 _context.OrderDetails.Add(model);
-                _context.SaveChanges();
-                _ = NotifyCustomerAboutOrderModification(model.OrderId);
+                await _context.SaveChangesAsync();
+                await NotifyCustomerAboutOrderModification(model.OrderId);
                 return RedirectToAction("Details", "Order", new { id = model.OrderId });
             }
             ViewData["OrderId"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(_context.Orders, "Id", "Id", model.OrderId);
@@ -65,7 +65,7 @@ namespace CMS.Backend.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(int id, OrderDetail model)
+        public async Task<IActionResult> Edit(int id, OrderDetail model)
         {
             if (id != model.Id) return NotFound();
 
@@ -74,8 +74,8 @@ namespace CMS.Backend.Controllers
             if (ModelState.IsValid)
             {
                 _context.OrderDetails.Update(model);
-                _context.SaveChanges();
-                _ = NotifyCustomerAboutOrderModification(model.OrderId);
+                await _context.SaveChangesAsync();
+                await NotifyCustomerAboutOrderModification(model.OrderId);
                 return RedirectToAction("Details", "Order", new { id = model.OrderId });
             }
             ViewData["OrderId"] = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(_context.Orders, "Id", "Id", model.OrderId);
@@ -85,7 +85,7 @@ namespace CMS.Backend.Controllers
 
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public IActionResult DeleteConfirmed(int id)
+        public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var model = _context.OrderDetails.Find(id);
             if (model == null) return NotFound();
@@ -94,8 +94,8 @@ namespace CMS.Backend.Controllers
             try
             {
                 _context.OrderDetails.Remove(model);
-                _context.SaveChanges();
-                _ = NotifyCustomerAboutOrderModification(orderId);
+                await _context.SaveChangesAsync();
+                await NotifyCustomerAboutOrderModification(orderId);
             }
             catch (DbUpdateException)
             {

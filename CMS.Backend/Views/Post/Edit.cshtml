@@ -23,7 +23,7 @@
             </div>
             <div class="form-group mb-3">
                 <label asp-for="Content" class="control-label"></label>
-                <textarea asp-for="Content" class="form-control" rows="8" id="ContentEditor"></textarea>
+                <textarea asp-for="Content" class="form-control" rows="8" id="Content"></textarea>
             </div>
             <div class="form-group mb-3">
                 <label asp-for="ImageUrl" class="control-label"></label>
@@ -55,13 +55,17 @@
 </div>
 
 @section Scripts {
-    <script src="https://cdn.ckeditor.com/4.22.1/standard/ckeditor.js"></script>
+    <script src="https://cdn.ckeditor.com/4.22.1/full/ckeditor.js"></script>
     <script>
-        CKEDITOR.replace('ContentEditor', {
-            filebrowserUploadUrl: '/api/UploadApi/UploadCKEditor',
-            filebrowserUploadMethod: 'form',
-            uploadUrl: '/api/UploadApi/UploadCKEditor',
-            versionCheck: false
+        $(document).ready(function() {
+            if (typeof CKEDITOR !== 'undefined') {
+                CKEDITOR.replace('Content', {
+                    filebrowserUploadUrl: '/api/UploadApi/UploadCKEditor',
+                    filebrowserUploadMethod: 'form'
+                });
+            } else {
+                console.error("CKEditor failed to load from CDN.");
+            }
         });
     </script>
 }
