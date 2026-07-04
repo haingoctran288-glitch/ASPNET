@@ -21,9 +21,32 @@ namespace CMS.Backend.Controllers
             _webHostEnvironment = webHostEnvironment;
         }
 
-        public IActionResult Index()
+        public IActionResult Index(int? categoryId, int page = 1)
         {
-            var list = _context.Products.Include(x => x.CategoryProduct).ToList();
+            int pageSize = 6;
+            var query = _context.Products.Include(x => x.CategoryProduct).AsQueryable();
+
+            if (categoryId.HasValue && categoryId.Value > 0)
+            {
+                query = query.Where(x => x.CategoryProductId == categoryId.Value);
+            }
+
+            query = query.OrderByDescending(x => x.Id);
+
+            int totalItems = query.Count();
+            int totalPages = (int)Math.Ceiling(totalItems / (double)pageSize);
+
+            var list = query.Skip((page - 1) * pageSize).Take(pageSize).ToList();
+
+            ViewBag.CategoryId = categoryId;
+            ViewBag.CurrentPage = page;
+            ViewBag.TotalPages = totalPages;
+            ViewBag.TotalItems = totalItems;
+            
+            var categories = _context.CategoriesProducts.ToList();
+            categories.Insert(0, new CategoryProduct { Id = 0, Name = "--- Tất cả danh mục ---" });
+            ViewBag.CategoryList = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(categories, "Id", "Name", categoryId);
+
             return View(list);
         }
 
